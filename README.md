@@ -21,7 +21,7 @@ transparent.
 - [Contribute](#contribute)
 
 This project is based on excellent [marker-animate](https://github.com/combatwombat/marker-animate) project by Robert Gerlach.
-The project was modified slightly to provide additional functionality, so modified forked version found
+marker-animate was modified slightly to provide additional functionality, so modified forked version found
 [here](https://github.com/viskin/marker-animate) should be used.
 
 This project is one big step towards animated OverlappingMarkerSpiderfier.
@@ -41,11 +41,18 @@ from Github, and include it in your page.
 
 marker-animate-unobtrusive depends on Google Maps and [jquery](http://jquery.com/download) libraries, so include them as well.
 
+jquery_easing must be downloaded from [here](http://gsgd.co.uk/sandbox/jquery/easing/).
+
+Modified version of marker-animate should be used, [download it from here](https://raw.githubusercontent.com/viskin/marker-animate/OverlappingMarkerSpiderfier/markerAnimate.js).
+
+So dependencies look like follows:
+
 ```html
 <!-- Dependencies -->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="jquery.min.js"></script>
 <script src="jquery_easing.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="markerAnimate.js"></script>
 <script src="markerAnimateUnobtrusive.min.js"></script>
 ```
 
