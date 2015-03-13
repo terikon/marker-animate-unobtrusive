@@ -16,6 +16,13 @@
     function (root, $) {
         'use strict';
 
+        //default options
+        var _options = {
+                isOverridePositionCallback: function () { return false; },
+                easing: "easeInOutQuint",
+                duration: 1000
+            };
+
         return {
 
             //Marker usually is google.maps.Marker .
@@ -27,13 +34,8 @@
             //  easing - animation easing, "easeInOutQuint" by default.
             decorateMarker: function (Marker, options) {
 
-                var defaultOptions = {
-                    isOverridePositionCallback: function () { return false; },
-                    easing: "easeInOutQuint",
-                    duration: 1000
-                };
-
-                options = $.extend({}, defaultOptions, options);
+                _options = $.extend(_options, options);
+                options = _options;
 
                 var originalSetPosition = Marker.prototype.setPosition,
                     originalGetPosition = Marker.prototype.getPosition,
@@ -62,7 +64,6 @@
                         originalSetPosition.apply(that, arguments);
 
                         //Keep endPosition, so from now on calls to getPosition() will return endPosition and not intermediate position of animation.
-                        //TODO: rename to something not-oms
                         that._AB_animate = true;
                         if (options.isOverridePositionCallback()) {
                             that._AB_override_value = endPosition;
@@ -123,6 +124,10 @@
                 };
 
                 return Marker;
+            },
+
+            setOptions: function (options) {
+                _options = $.extend(_options, options);
             }
         };
     }));
