@@ -1,0 +1,40 @@
+{
+  "name": "marker-animate-unobtrusive",
+  "title": "markerAnimateUnobtrusive",
+  "version": "0.0.1",
+  "description": "Unobtrusive Google Maps animated marker",
+  "main": "markerAnimateUnobtrusive.js",
+  "scripts": {
+	"build": "npm install && grunt",
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"jshint": "jshint markerAnimateUnobtrusive.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terikon/marker-animate-unobtrusive.git"
+  },
+  "keywords": [
+    "Google Maps",
+    "marker",
+	"marker animation"
+  ],
+  "author": {
+	"name": "Terikon Software",
+	"email": "npm@terikon.com",
+	"url": "http://il.linkedin.com/in/romanviskin" 
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terikon/marker-animate-unobtrusive/issues"
+  },
+  "homepage": "https://github.com/terikon/marker-animate-unobtrusive",
+  "dependencies": {
+	"jquery": "*",
+	"marker-animate": "git+https://github.com/viskin/marker-animate.git#OverlappingMarkerSpiderfier"
+  },
+  "devDependencies": {
+    "jshint": "^2.6.0",
+	"grunt": "^0.4.5",
+	"grunt-contrib-uglify": "^0.7.0"
+  }
+}
