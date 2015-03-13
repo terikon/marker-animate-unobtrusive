@@ -85,9 +85,20 @@ Important - your code should never directly access marker's *position* field, on
 
 # Demo
 
-[![alt tag](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-obtrusive.html)
+Here's demonstration of difficulties we met with original [marker-animate](https://github.com/combatwombat/marker-animate) library.
 
-[![alt tag](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-unobtrusive.html)
+- With it you should call animateTo() method instead of usual setPosition(). We wanted fire-and-forget functionality,
+so all markers will just animate.
+- Huge issue is that original library causes masses of position_changed event while marker is being animated. You can see it in this demo (of original library), with large amount of position_changed event occur: 
+
+[![alt obtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-obtrusive.html)
+
+- While marker moves in original library, it reports its intermediate position when getPosition() called. If we call
+marker.setPosition(point), we want to receive the point from marker.getPosition(), and not some useless animation state.
+
+In following demo you can see that position_changed is called in natural way: 
+
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-unobtrusive.html)
 
 # AMD
 
@@ -106,6 +117,7 @@ define(['markerAnimateUnobtrusive'], function (markerAnimateUnobtrusive) {
 - Make it possible to use original animateTo() method
 - Make it possible to use any easing library, not just jquery_easing
 - Add tests
+- Make initialization simpler, with just call to decorateMarker() without parameters
 
 # Contribute
 
