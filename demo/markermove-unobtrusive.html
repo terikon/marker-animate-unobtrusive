@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,7 +15,7 @@
     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
     font-size: 12px;
   }
-  #controls {
+  .control {
     position: absolute;
     bottom: 28px;
     right: 6px;
@@ -31,6 +31,20 @@
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+  }
+  #controls {
+    bottom: 28px;
+    right: 6px;
+    width: 200px;
+    height: 78px;
+  }
+  #log {
+    bottom: 28px;
+    left: 6px;
+    width: 200px;
+    height: 78px;
+    overflow-y: scroll;
+    
   }
   #controls .row {
     overflow: hidden;
@@ -60,14 +74,17 @@
 
 </style>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!-- optional for animateTo -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> <!-- optional for animateTo -->
     <script type="text/javascript" src="jquery_easing.js"></script> <!-- also optional for animateTo. But much nicer -->
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     
-    <script type="text/javascript" src="../markerAnimate.js"></script>
+    <script type="text/javascript" src="markerAnimate.js"></script>
+    <script type="text/javascript" src="markerAnimateUnobtrusive.js"></script>
 
 
     <script>
+
+      markerAnimateUnobtrusive.decorateMarker(google.maps.Marker);
 
       var marker, map;
       function initialize() {
@@ -84,7 +101,12 @@
             map: map,
             title: 'Hello World!'
         });
-        
+
+        var $log = $("#log");
+        google.maps.event.addListener(marker, 'position_changed', function () {
+            $log.html($log.html() + "marker.position_changed<br/>");
+        });
+
       }
 
 
@@ -100,7 +122,8 @@
             duration = 1;
             $('#durationOption').val(duration);
           }
-          marker.animateTo(event.latLng, {easing: $('#easingOption').val(), duration: duration});
+          markerAnimateUnobtrusive.setOptions({ easing: $('#easingOption').val(), duration: duration });
+          marker.setPosition(event.latLng);
         });
         
         if (window.location.hash == "#iframe") {
@@ -115,7 +138,7 @@
   <body>
     <div id="map_canvas"></div>
 
-    <div id="controls">
+    <div id="controls" class="control">
       <div class="row">
         <label for="easingOption">Easing:</label>
         <select id="easingOption">
@@ -161,6 +184,9 @@
         <a href="http://robsite.net/google-maps-animated-marker-move">More on robsite.net &rarr;</a>
       </div>
       
+    </div>
+      
+    <div id="log" class="control">
     </div>
 
   </body>
