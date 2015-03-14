@@ -4,7 +4,7 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jquery'], factory.bind(null, root));
+        define(['jquery', 'markerAnimate'], factory.bind(null, root));
     } else if (typeof module !== "undefined" && module !== null && module.exports != null) { // jshint ignore:line
         // Node module.
         module.exports.markerAnimateUnobtrusive = factory(root, require('jquery'));

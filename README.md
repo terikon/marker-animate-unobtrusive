@@ -49,9 +49,9 @@ So dependencies look like follows:
 
 ```html
 <!-- Dependencies -->
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="jquery.min.js"></script>
 <script src="jquery_easing.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="markerAnimate.js"></script>
 <script src="markerAnimateUnobtrusive.min.js"></script>
 ```
@@ -111,7 +111,18 @@ In following demo you can see that position_changed is called in natural way:
 
 marker-animate-unobtrusive can be used with [requirejs](http://requirejs.org/).
 
-'jquery' library should be configured with requirejs. The usage is simple:
+'jquery' library should be configured with requirejs. markerAnimate should be configured as well.
+
+```js
+requirejs.config({
+  shim: {
+    "jquery.easing": ["jquery"],
+    "markerAnimate": { deps: ["jquery.easing"] }
+  }
+});
+```
+
+The usage is simple:
 
 ```js
 define(['markerAnimateUnobtrusive'], function (markerAnimateUnobtrusive) {
