@@ -1,6 +1,6 @@
 {
   "name": "marker-animate-unobtrusive",
-  "title": "markerAnimateUnobtrusive",
+  "title": "SlidingMarker",
   "version": "0.1.0",
   "description": "Unobtrusive Google Maps animated marker",
   "main": "SlidingMarker.js",
