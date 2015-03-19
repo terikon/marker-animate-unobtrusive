@@ -20,7 +20,8 @@
   "keywords": [
     "Google Maps",
     "marker",
-	"marker animation"
+	"marker animation",
+	"SlidingMarker"
   ],
   
   "author": {

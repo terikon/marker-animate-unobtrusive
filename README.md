@@ -19,6 +19,9 @@ marker.getPosition() will always return final destination of marker, and positio
 movement starts. That's why it called unobtrusive - your current code will not event notice animation, it's completely
 transparent.
 
+SlidingMarker is a complete rewrite of markerAnimateUnobtrusive library, with much-much more features and greatly improved
+architecture.
+
 # Table of contents
 
 - [Install](#install)
@@ -36,13 +39,15 @@ This project is one big step towards animated [OverlappingMarkerSpiderfier](http
 
 # Install
 
-To install with npm, you can
+## with npm
 
 ```
 npm install marker-animate-unobtrusive
 ```
 
-Or you can download **SlidingMarker.js**
+## manually
+
+Download **SlidingMarker.js**
 [minified](https://raw.githubusercontent.com/terikon/marker-animate-unobtrusive/master/dist/SlidingMarker.min.js) or
 [debug](https://raw.githubusercontent.com/terikon/marker-animate-unobtrusive/master/SlidingMarker.js)
 from Github, and include it in your page.
@@ -66,7 +71,21 @@ So dependencies look like follows:
 
 # Use
 
-If you want to make all markers on map animateable, first of all, call SlidingMarker.initializeGlobally() method.
+## locally
+
+When you create marker, instantiate SlidingMarker instance with same parameter you used to instantiate google.maps.Marker:
+
+```js
+//old code
+//var marker = new google.maps.Marker();
+
+//new code
+var marker = new SlidingMarker();
+```
+
+## globally
+
+If you want to make all markers on map animate, first of all, call SlidingMarker.initializeGlobally() method.
 Do it as soon as SlidingMarker script loads, before any other script:  
 
 ```html
@@ -79,43 +98,65 @@ Do it as soon as SlidingMarker script loads, before any other script:
 That's it. Now all marker movements will be animated, e.g. :
 
 ```js
+var marker = new google.maps.Marker();
+...
 marker.setPosition(latLng); //Will cause smooth animation
 ```
 
+
 # API
 
-markerAnimateUnobtrusive object is created in global scope (on injected with [AMD](#amd)), with following methods in it:
+**SlidingMarker** object that inherits google.maps.Marker is created in global scope (on injected with [AMD](#amd)), with following method in it:
 
-<a name="decorateMarker"></a>
-[markerAnimateUnobtrusive.decorateMarker(Marker, options)](#decorateMarker) initialize the mechanism. google.maps.Marker
-should be provided as Marker parameter at most cases. options is optional:
+<a name="initializeGlobally"></a>
+[SlidingMarker.initializeGlobally()](#decorateMarker) when called, replaces google.maps.Marker with SlidingMarker, so all
+markers of google maps will be animated.
+
+SlidingMarker has all the events, methods and options of google.maps.Marker - that's its beauty. In addition, following
+options are supported to fine-tune animation for each marker:
 
 - easing - "easeInOutQuint" by default
 - duration - in ms, 1000 by default
+- animateFunction - by default, SlidingMarker assumes that marker is enhanced with animateTo method, but you can provide
+alternative animation function to call on marker.
 - isOverridePositionCallback - callback for advanced scenarios, to tell when marker movement should go to "override mode", 
 meaning that movement is ignored. This used by OverlappingMarkerSpiderfier integration.
 
-<a name="setOptions"></a>
-[setOptions(options)](#setOptions) replaced previously set options, for all markers globally. 
+Example:
 
-Important - your code should never directly access marker's *position* field, only with *marker.getPosition()* method.
+```js
+var marker = new SlidingMarker({
+    position: myLatlng,
+    map: map,
+    title: 'I\m sliding marker',
+    duration: 2000
+});
+...
+marker.setDuration(1000);
+```
 
 # Demo
 
-Here's demonstration of difficulties we met with original [marker-animate](https://github.com/combatwombat/marker-animate) library.
+Demos reside in demo folder.
 
-- With it you should call animateTo() method instead of usual setPosition(). We wanted fire-and-forget functionality,
-so all markers will just animate.
-- Huge issue is that original library causes masses of position_changed event while marker is being animated. You can see it in this demo (of original library), with large amount of position_changed event occur: 
+In following demo you can see that position_changed is called in natural way. Click any point on map to see marker move. 
 
-[![alt obtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-obtrusive.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-sliding.html)
 
-- While marker moves in original library, it reports its intermediate position when getPosition() called. If we call
-marker.setPosition(point), we want to receive the point from marker.getPosition(), and not some useless animation state.
+You can use SlidingMarker with other libraries that enhance original marker, like
+[MarkerWithLabel](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerwithlabel/docs/reference.html) or
+[Geolocation Marker](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/docs/reference.html).
 
-In following demo you can see that position_changed is called in natural way: 
+Here is animated MarkerWithLabel for a first time:
 
-[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-unobtrusive.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markerwithlabelmove-sliding.html)
+
+Here is animated version of Geolocation Marker:
+
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/geolocationmarker-sliding.html)
+
+Sometimes libraries should be slightly modified to make use of animation. Animated versions of MarkerWithLabel and
+Geolocation Marker are in vendor folder.
 
 # AMD
 
@@ -135,16 +176,30 @@ requirejs.config({
 The usage is simple:
 
 ```js
-define(['markerAnimateUnobtrusive'], function (markerAnimateUnobtrusive) {
+define(['SlidingMarker'], function (SlidingMarker) {
 	//Use it here
 }
 ``` 
 
 # Under the hood
 
+Here's demonstration of difficulties we met with original [marker-animate](https://github.com/combatwombat/marker-animate) library.
+
+- With it you should call animateTo() method instead of usual setPosition(). We wanted fire-and-forget functionality,
+so all markers will just animate.
+- Huge issue is that original library causes masses of position_changed event while marker is being animated. You can see it in this demo (of original library), with large amount of position_changed event occur: 
+
+[![alt obtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-obtrusive.html)
+
+- While marker moves in original library, it reports its intermediate position when getPosition() called. If we call
+marker.setPosition(point), we want to receive the point from marker.getPosition(), and not some useless animation state.
+
+These facts prevents marker-animate from usage with other libraries that depend on markers.
+
 # Things to consider for future versions
 
 - Make it possible to use any easing library, not just jquery_easing
+- Make it possible to restore google maps to original state after initializeGlobally() called. 
 
 # Contribute
 
