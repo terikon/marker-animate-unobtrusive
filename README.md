@@ -3,7 +3,7 @@
 Makes Google Maps markers to move naturally in animated way. This looks more natural for user than just marker jump to position.
 Like this:
 
-[![alt tag](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-sliding.html)
+[![alt tag](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/SlidingMarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-sliding.html)
 
 It can work in two modes.
 
@@ -141,7 +141,7 @@ Demos reside in demo folder.
 
 In following demo you can see that position_changed is called in natural way. Click any point on map to see marker move. 
 
-[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-sliding.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/SlidingMarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-sliding.html)
 
 You can use SlidingMarker with other libraries that enhance original marker, like
 [MarkerWithLabel](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerwithlabel/docs/reference.html) or
@@ -149,11 +149,11 @@ You can use SlidingMarker with other libraries that enhance original marker, lik
 
 Here is animated MarkerWithLabel for a first time:
 
-[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markerwithlabelmove-sliding.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/markerWithLabel.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markerwithlabelmove-sliding.html)
 
 Here is animated version of Geolocation Marker:
 
-[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/geolocationmarker-sliding.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/geolocationmarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/geolocationmarker-sliding.html)
 
 Sometimes libraries should be slightly modified to make use of animation. Animated versions of MarkerWithLabel and
 Geolocation Marker are in vendor folder.
@@ -189,7 +189,7 @@ Here's demonstration of difficulties we met with original [marker-animate](https
 so all markers will just animate.
 - Huge issue is that original library causes masses of position_changed event while marker is being animated. You can see it in this demo (of original library), with large amount of position_changed event occur: 
 
-[![alt obtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/map.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-obtrusive.html)
+[![alt obtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/obtrusive.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/markermove-obtrusive.html)
 
 - While marker moves in original library, it reports its intermediate position when getPosition() called. If we call
 marker.setPosition(point), we want to receive the point from marker.getPosition(), and not some useless animation state.
