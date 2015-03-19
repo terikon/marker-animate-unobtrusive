@@ -79,17 +79,15 @@
     </style>
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
-    <script src="Scripts/jquery-2.1.3.min.js"></script>
-    <script src="Scripts/jquery.easing.1.3.js"></script>
-    
-    <script src="Scripts/marker-animate/markerAnimate.js"></script>
-    <script src="Scripts/marker-animate-unobtrusive/SlidingMarker.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/jquery.easing.1.3.js"></script>
+    <script src="../vendor/markerAnimate.js"></script>
+    <script src="../dist/SlidingMarker.min.js"></script>
     <script>
         SlidingMarker.initializeGlobally();
     </script>
-    <script src="Scripts/markerwithlabel-terikon/markerwithlabel.terikon.js"></script>
-    <script src="Scripts/geolocationmarker-terikon/geolocationmarker.terikon.js"></script>
+    <script src="../vendor/markerwithlabel.terikon.js"></script>
+    <script src="../vendor/geolocationmarker.terikon.js"></script>
 
     <script>
         var geoMarker,
@@ -141,6 +139,12 @@
                     duration = 1;
                     $('#durationOption').val(duration);
                 }
+
+                geoMarker.setMarkerOptions({
+                    duration: duration,
+                    easing: $('#easingOption').val()
+                });
+
                 geoMarker.updatePosition(latLngToGeoPosition(event.latLng));
             });
 
@@ -151,9 +155,7 @@
             };
 
             printEvent(geoMarker, "click");
-            //printEvent(geoMarker.marker_, "map_changed");
             printEvent(geoMarker, "position_changed");
-            //printEvent(geoMarker.marker_, "animationposition_changed");
 
             if (window.location.hash == "#iframe") {
                 $('#backLink').hide();

@@ -210,9 +210,27 @@
                 return this.get("animationPosition");
             },
 
+            //Changes marker position immediately
             setPositionNotAnimated: function (position) {
                 this.originalSet("position", position);
+            },
+
+            setDuration: function (value) {
+                this.set("duration", value);
+            },
+
+            getDuration: function () {
+                return this.get("duration");
+            },
+
+            setEasing: function (value) {
+                this.set("easing", value);
+            },
+
+            getEasing: function () {
+                return this.get("easing");
             }
+
         });
 
         SlidingMarker.initializeGlobally = function () {

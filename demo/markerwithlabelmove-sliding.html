@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Google Maps Animated Marker Move Demo</title>
+    <title>Google Maps Sliding MarkerWithLabel Move Demo</title>
 
     <style type="text/css">
         html, body, #map_canvas {
@@ -80,15 +80,14 @@
     </style>
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
-    <script src="Scripts/jquery-2.1.3.min.js"></script>
-    <script src="Scripts/jquery.easing.1.3.js"></script>
-    <script src="Scripts/marker-animate-unobtrusive/SlidingMarker.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/jquery.easing.1.3.js"></script>
+    <script src="../vendor/markerAnimate.js"></script>
+    <script src="../dist/SlidingMarker.min.js"></script>
     <script>
         SlidingMarker.initializeGlobally();
     </script>
-    <script src="Scripts/marker-animate/markerAnimate.js"></script>
-    <script src="Scripts/markerwithlabel-terikon/markerwithlabel.terikon.js"></script>
+    <script src="../vendor/markerwithlabel.terikon.js"></script>
 
     <script>
         var marker, map;
@@ -104,24 +103,14 @@
             marker = new MarkerWithLabel({
                 position: myLatlng,
                 //map: map,
-                title: 'Hello World!',
-                labelContent: "Label",
+                title: 'I\'m sliding marker!',
+                labelContent: "I have label!",
 
                 //SlidingMarker's options
                 //animateFunction: google.maps.Marker.prototype.animateTo
             });
 
             marker.setMap(map);
-
-            ///
-            //google.maps.event.addListener(marker.label.marker_, "AT_position_changed_animated", function () {
-            //    marker.getPosition = function () {
-            //        return this.position;
-            //    };
-            //    marker.label.setPosition();
-            //    delete marker.getPosition;
-            //});
-            ///
 
             var $log = $("#log");
             google.maps.event.addListener(marker, 'position_changed', function () {
@@ -143,6 +132,10 @@
                     duration = 1;
                     $('#durationOption').val(duration);
                 }
+
+                marker.setDuration(duration);
+                marker.setEasing($('#easingOption').val());
+
                 marker.setPosition(event.latLng);
             });
 
