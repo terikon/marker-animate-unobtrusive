@@ -29,7 +29,7 @@ architecture.
 - [Demo](#demo)
 - [API](#api)
 - [AMD](#amd)
-- [Under the hood](#underthehood)
+- [Under the hood](#under-the-hood)
 - [Things to consider for future versions](#things-to-consider-for-future-versions)
 - [Contribute](#contribute)
 
