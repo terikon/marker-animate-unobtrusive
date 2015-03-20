@@ -125,21 +125,21 @@ markers of google maps will be animated.
 
 SlidingMarker has all the events, methods and options of google.maps.Marker - that's its beauty.
 
-- getPosition() function returns discrete position, instead of animated one. That means that when one calls setPosition()
+- **getPosition()** function returns discrete position, instead of animated one. That means that when one calls setPosition()
 and animation is in place, getPosition() will return final position instead of intermediate. Use
 [getAnimationPosition()](#getAnimationPosition) to retrieve intermediate position.
 
-- position_changed event will be raised one time per call to setPosition(), even when animation is in place. To receive
+- **position_changed** event will be raised one time per call to setPosition(), even when animation is in place. To receive
 updates on animated movement, use [animationposition_changed](#animationposition_changed) event.
 
 In addition, following options are supported to fine-tune animation for each marker:
 
-- easing - "easeInOutQuint" by default. Possible values are same as in
+- **easing** - "easeInOutQuint" by default. Possible values are same as in
 [jquery.easing](http://gsgd.co.uk/sandbox/jquery/easing/) library.
-- duration - in ms, 1000 by default.
-- animateFunction - by default, SlidingMarker assumes that marker is enhanced with animateTo method, but you can provide
+- **duration** - in ms, 1000 by default.
+- **animateFunction** - by default, SlidingMarker assumes that marker is enhanced with animateTo method, but you can provide
 alternative animation function to call on marker.
-- isOverridePositionCallback - callback for advanced scenarios, to tell when marker movement should go to "override mode", 
+- **isOverridePositionCallback** - callback for advanced scenarios, to tell when marker movement should go to "override mode", 
 meaning that movement is ignored. This used by OverlappingMarkerSpiderfier integration.
 
 Example:
@@ -172,9 +172,6 @@ There are few additions to SlidingMarker instance:
 [getEasing()](#getEasing) return easing type.
 
 <a name="getAnimationPosition"></a>
-[getAnimationPosition()](#getAnimationPosition)
-
-<a name="getAnimationPosition"></a>
 [getAnimationPosition()](#getAnimationPosition) returns position of animated marker.
 
 <a name="setPositionNotAnimated"></a>
@@ -205,7 +202,7 @@ Here is animated version of Geolocation Marker:
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/geolocationmarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/geolocationmarker-sliding.html)
 
 Sometimes libraries should be slightly modified to make use of animation. Animated versions of MarkerWithLabel and
-Geolocation Marker are in vendor folder.
+Geolocation Marker are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
 
 # AMD
 
