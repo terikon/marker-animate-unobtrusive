@@ -45,7 +45,10 @@ This project is one big step towards animated [OverlappingMarkerSpiderfier](http
 npm install marker-animate-unobtrusive
 ```
 
-## manually
+All needed dependencies are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
+These are jquery.easing and markerAnimate.
+
+## include on page
 
 Download **SlidingMarker.js**
 [minified](https://raw.githubusercontent.com/terikon/marker-animate-unobtrusive/master/dist/SlidingMarker.min.js) or
@@ -54,7 +57,7 @@ from Github, and include it in your page.
 
 SlidingMarker depends on Google Maps and [jquery](http://jquery.com/download) libraries, so include them as well.
 
-jquery.easing may be downloaded from [here](http://gsgd.co.uk/sandbox/jquery/easing/).
+jquery.easing may be downloaded from [here](http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js).
 
 Download marker-animate [from here](https://raw.githubusercontent.com/combatwombat/marker-animate/master/markerAnimate.js).
 
@@ -62,10 +65,18 @@ So dependencies look like follows:
 
 ```html
 <!-- Dependencies -->
+
+<!-- jquery library and jquery.easing plugin are needed -->
 <script src="jquery.min.js"></script>
 <script src="jquery.easing.js"></script>
+
+<!-- we provide marker for google maps, so here it comes  -->
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<!-- we use markerAnimate to actually animate marker -->
 <script src="markerAnimate.js"></script>
+
+<!-- SlidingMarker hides details from you - your markers are just animated automagically -->
 <script src="SlidingMarker.min.js"></script>
 ```
 
@@ -109,14 +120,23 @@ marker.setPosition(latLng); //Will cause smooth animation
 **SlidingMarker** object that inherits google.maps.Marker is created in global scope (on injected with [AMD](#amd)), with following method in it:
 
 <a name="initializeGlobally"></a>
-[SlidingMarker.initializeGlobally()](#decorateMarker) when called, replaces google.maps.Marker with SlidingMarker, so all
+[SlidingMarker.initializeGlobally()](#initializeGlobally) when called, replaces google.maps.Marker with SlidingMarker, so all
 markers of google maps will be animated.
 
-SlidingMarker has all the events, methods and options of google.maps.Marker - that's its beauty. In addition, following
-options are supported to fine-tune animation for each marker:
+SlidingMarker has all the events, methods and options of google.maps.Marker - that's its beauty.
 
-- easing - "easeInOutQuint" by default
-- duration - in ms, 1000 by default
+- getPosition() function returns discrete position, instead of animated one. That means that when one calls setPosition()
+and animation is in place, getPosition() will return final position instead of intermediate. Use
+[getAnimationPosition()](#getAnimationPosition) to retrieve intermediate position.
+
+- position_changed event will be raised one time per call to setPosition(), even when animation is in place. To receive
+updates on animated movement, use [animationposition_changed](#animationposition_changed) event.
+
+In addition, following options are supported to fine-tune animation for each marker:
+
+- easing - "easeInOutQuint" by default. Possible values are same as in
+[jquery.easing](http://gsgd.co.uk/sandbox/jquery/easing/) library.
+- duration - in ms, 1000 by default.
 - animateFunction - by default, SlidingMarker assumes that marker is enhanced with animateTo method, but you can provide
 alternative animation function to call on marker.
 - isOverridePositionCallback - callback for advanced scenarios, to tell when marker movement should go to "override mode", 
@@ -132,12 +152,41 @@ var marker = new SlidingMarker({
     duration: 2000
 });
 ...
+// use marker as ordinal google map's marker.
+// few animation customizations are also possible.
 marker.setDuration(1000);
 ```
 
+There are few additions to SlidingMarker instance:
+
+<a name="setDuration"></a>
+[setDuration(duration)](#setDuration) sets duration of animation for marker, in ms.
+
+<a name="getDuration"></a>
+[getDuration()](#getDuration) returns duration of animation.
+
+<a name="setEasing"></a>
+[setEasing(easing)](#setEasing) sets easing type of animation.
+
+<a name="getEasing"></a>
+[getEasing()](#getEasing) return easing type.
+
+<a name="getAnimationPosition"></a>
+[getAnimationPosition()](#getAnimationPosition)
+
+<a name="getAnimationPosition"></a>
+[getAnimationPosition()](#getAnimationPosition) returns position of animated marker.
+
+<a name="setPositionNotAnimated"></a>
+[setPositionNotAnimated(position)](#setPositionNotAnimated) performs original not animated setPosition() on marker.
+
+<a name="animationposition_changed"></a>
+[animationposition_changed](#animationposition_changed) event is raised when position of visible animated marker changes.
+
+
 # Demo
 
-Demos reside in demo folder.
+Demos reside in [demo](https://github.com/terikon/marker-animate-unobtrusive/tree/master/demo) folder.
 
 In following demo you can see that position_changed is called in natural way. Click any point on map to see marker move. 
 
@@ -199,7 +248,8 @@ These facts prevents marker-animate from usage with other libraries that depend 
 # Things to consider for future versions
 
 - Make it possible to use any easing library, not just jquery_easing
-- Make it possible to restore google maps to original state after initializeGlobally() called. 
+- Make it possible to restore google maps to original state after initializeGlobally() called.
+- Make it possible to stop animation. Animation should stop as well when setPositionNotAnimated is called.
 
 # Contribute
 
@@ -219,3 +269,4 @@ To run tests:
 
     npm run test
 
+Tests reside in [tests/spec](https://github.com/terikon/marker-animate-unobtrusive/tree/master/tests/spec) folder.
