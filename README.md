@@ -229,6 +229,8 @@ define(['SlidingMarker'], function (SlidingMarker) {
 
 # Under the hood
 
+## Imperfection of marker-animate
+
 Here's demonstration of difficulties we met with original [marker-animate](https://github.com/combatwombat/marker-animate) library.
 
 - With it you should call animateTo() method instead of usual setPosition(). We wanted fire-and-forget functionality,
@@ -241,6 +243,8 @@ so all markers will just animate.
 marker.setPosition(point), we want to receive the point from marker.getPosition(), and not some useless animation state.
 
 These facts prevents marker-animate from usage with other libraries that depend on markers.
+
+## Architecture of SlidingMarker
 
 The solution was to use decorator pattern. SlidingMarker inherits google.maps.Marker, so it can be used anywhere just like
 google.maps.Marker itself. For example, following is true:
@@ -255,7 +259,9 @@ redirected to _instance. For example, getMap() method called on marker will call
 
 Every user event, like click, that triggers on visible _instance marker is redirected back to marker itself.
 
-This way animation that occur on visible _instance does not interfere with invisible marker that you work with.  
+This way animation that occur on visible _instance does not interfere with invisible marker that you work with.
+
+So, storing SlidingMarker takes *2 memory than storing instance of google.maps.Marker. 
 
 # Things to consider for future versions
 

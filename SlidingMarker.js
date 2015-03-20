@@ -47,42 +47,14 @@
             $.extend(childCtor.prototype, {
                 _instance: null, //override it in constructor
 
-                //originalGet: function () {
-                //    return parentPrototype.get.apply(this, arguments);
-                //},
-
                 originalSet: function () {
                     return parentPrototype.set.apply(this, arguments);
                 },
 
                 //from MVCObject
-                //get: function (key) {
-                //    //augment functionality here
-                //    if (key === "map") { //map redirects to _instance
-                //        //if (this._constructing /*|| this._settingMap*/) { //constructing accesses get("map"), return null to prevent being added to map
-                //        //    return null;
-                //        //}
-                //        return this.originalGet.apply(this._instance, arguments);
-                //    }
-
-                //    //all others taken from this
-                //    return this.originalGet.apply(this, arguments);
-                //},
-
-                //from MVCObject
                 set: function (key, value) {
                     var that = this;
 
-                    //augment functionality here
-                    //if (key === "map") { //map redirects to _instance
-                    //    //this never actually visible
-                    //    this.map = value; //just update field
-                    //    that.originalSet.apply(that._instance, arguments);
-                    //    parentPrototype.notify.call(that, key); //notify "map_changed" event on this manually
-                    //    return;
-                    //} 
-                    
-                    //sets on both this and instance
                     that.originalSet.apply(that, arguments);
 
                     if (key === "position" && that instanceof SlidingMarker) {
@@ -106,7 +78,7 @@
 
                     //apply animation function
                     //TODO: provide some kind of adapter
-                    //this will cause many animationPosition_changed events
+                    //this will cause many animationposition_changed events
                     that.get("animateFunction").call(that._instance, position, {
                         easing: that.get("easing"),
                         duration: that.get("duration"),
@@ -126,12 +98,6 @@
                     var target = getEventTarget.call(this, eventName);
                     return this.originalAddListener.apply(target, arguments);
                 },
-
-                //setMap: function () {
-                //    //this._settingMap = true;
-                //    parentPrototype.setMap.apply(this, arguments);
-                //    //delete this._settingMap;
-                //}
 
                 map_changed: function () {
                     //Should be empty
@@ -179,8 +145,6 @@
 
         //constructor
         var SlidingMarker = function (opt_options) {
-
-            var that = this;
 
             opt_options = $.extend({}, defaultOptions, opt_options);
 

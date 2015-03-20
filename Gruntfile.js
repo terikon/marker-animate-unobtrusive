@@ -9,23 +9,27 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		
 		uglify: {
-			target1: {
-				options: {
-					sourceMap: true,
-					banner: '/*! <%= pkg.title %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-				},
+			options: {
+				sourceMap: true,
+				banner: '/*! <%= pkg.title %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+			},
+			SlidingMarker: {
 				src: 'SlidingMarker.js',
 				dest: 'dist/SlidingMarker.min.js'
+			},
+			MarkerWithGhost: {
+				src: 'MarkerWithGhost.js',
+				dest: 'dist/MarkerWithGhost.min.js'
 			}
 		},
 		
 		jshint: {
-			all: ['Gruntfile.js', 'SlidingMarker.js', 'tests/**/*.js']
+			all: ['Gruntfile.js', 'SlidingMarker.js', 'MarkerWithGhost.js', 'tests/**/*.js']
 		},
 		
 		jasmine: {
 			all: {
-				src: "SlidingMarker.js",
+				src: ["SlidingMarker.js", "MarkerWithGhost.js"],
 				options: {
 					specs: "tests/spec/*Spec.js",
 					vendor: [
