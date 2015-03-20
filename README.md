@@ -29,6 +29,7 @@ architecture.
 - [Demo](#demo)
 - [API](#api)
 - [AMD](#amd)
+- [MarkerWithGhost](#markerwithghost)
 - [Under the hood](#under-the-hood)
 - [Things to consider for future versions](#things-to-consider-for-future-versions)
 - [Contribute](#contribute)
@@ -119,8 +120,8 @@ marker.setPosition(latLng); //Will cause smooth animation
 
 **SlidingMarker** object that inherits google.maps.Marker is created in global scope (on injected with [AMD](#amd)), with following method in it:
 
-<a name="initializeGlobally"></a>
-[SlidingMarker.initializeGlobally()](#initializeGlobally) when called, replaces google.maps.Marker with SlidingMarker, so all
+<a name="SlidingMarker.initializeGlobally"></a>
+[SlidingMarker.initializeGlobally()](#SlidingMarker.initializeGlobally) when called, replaces google.maps.Marker with SlidingMarker, so all
 markers of google maps will be animated.
 
 SlidingMarker has all the events, methods and options of google.maps.Marker - that's its beauty.
@@ -139,8 +140,6 @@ In addition, following options are supported to fine-tune animation for each mar
 - **duration** - in ms, 1000 by default.
 - **animateFunction** - by default, SlidingMarker assumes that marker is enhanced with animateTo method, but you can provide
 alternative animation function to call on marker.
-- **isOverridePositionCallback** - callback for advanced scenarios, to tell when marker movement should go to "override mode", 
-meaning that movement is ignored. This used by OverlappingMarkerSpiderfier integration.
 
 Example:
 
@@ -159,26 +158,26 @@ marker.setDuration(1000);
 
 There are few additions to SlidingMarker instance:
 
-<a name="setDuration"></a>
-[setDuration(duration)](#setDuration) sets duration of animation for marker, in ms.
+<a name="SlidingMarker.setDuration"></a>
+[setDuration(duration)](#SlidingMarker.setDuration) sets duration of animation for marker, in ms.
 
-<a name="getDuration"></a>
-[getDuration()](#getDuration) returns duration of animation.
+<a name="SlidingMarker.getDuration"></a>
+[getDuration()](#SlidingMarker.getDuration) returns duration of animation.
 
-<a name="setEasing"></a>
-[setEasing(easing)](#setEasing) sets easing type of animation.
+<a name="SlidingMarker.setEasing"></a>
+[setEasing(easing)](#SlidingMarker.setEasing) sets easing type of animation.
 
-<a name="getEasing"></a>
-[getEasing()](#getEasing) return easing type.
+<a name="SlidingMarker.getEasing"></a>
+[getEasing()](#SlidingMarker.getEasing) return easing type.
 
-<a name="getAnimationPosition"></a>
-[getAnimationPosition()](#getAnimationPosition) returns position of animated marker.
+<a name="SlidingMarker.getAnimationPosition"></a>
+[getAnimationPosition()](#SlidingMarker.getAnimationPosition) returns position of animated marker.
 
-<a name="setPositionNotAnimated"></a>
-[setPositionNotAnimated(position)](#setPositionNotAnimated) performs original not animated setPosition() on marker.
+<a name="SlidingMarker.setPositionNotAnimated"></a>
+[setPositionNotAnimated(position)](#SlidingMarker.setPositionNotAnimated) performs original not animated setPosition() on marker.
 
-<a name="animationposition_changed"></a>
-[animationposition_changed](#animationposition_changed) event is raised when position of visible animated marker changes.
+<a name="SlidingMarker.animationposition_changed"></a>
+[animationposition_changed](#SlidingMarker.animationposition_changed) event is raised when position of visible animated marker changes.
 
 
 # Demo
@@ -226,6 +225,51 @@ define(['SlidingMarker'], function (SlidingMarker) {
 	//Use it here
 }
 ``` 
+
+# MarkerWithGhost
+
+In addition to SlidingMarker, you can use MarkerWithGhost class. It useful in less scenarios. Example scenario is usage
+with [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier).
+
+MarkerWithGhost provides "ghost" mode. When this mode active, the marker moves as usual, but fires no position_changed
+events. It's position returned by getPosition method will not change either.
+
+Ghost mode is activated by calling setGhostPosition method. It will deactivate as soon as you call to plain setPosition().
+
+Ghost will move always and provide ghostPosition property, as well as ghostposition_changed event. When not in "ghost mode",
+it will move with marker. When "ghost mode" is active, the ghost will move instead of marker.
+
+## API of MarkerWithGhost
+
+MarkerWithGhost inherits SlidingMarker.
+
+<a name="MarkerWithGhost.initializeGlobally"></a>
+[MarkerWithGhost.initializeGlobally()](#MarkerWithGhost.initializeGlobally) works just as [same method](#SlidingMarker.initializeGlobally)
+of SlidingMarker.
+
+### instance methods
+
+<a name="MarkerWithGhost.setGhostPosition"></a>
+[setGhostPosition(ghostPosition)](#MarkerWithGhost.setGhostPosition) starts "ghost mode". Marker moves to provided position,
+but will not fire position_changed event, and it's position property will not change. To exit "ghost" mode call setPosition().
+
+<a name="MarkerWithGhost.getGhostPosition"></a>
+[getGhostPosition()](#MarkerWithGhost.getGhostPosition) returns position of ghost. If not in ghost mode, it will be equal to
+position property.
+
+<a name="MarkerWithGhost.getGhostAnimationPosition"></a>
+[getGhostAnimationPosition()](#MarkerWithGhost.getGhostAnimationPosition) return animation position of ghost. If not in 
+ghost mode, it will be equal to animationPosition property.
+
+### events
+
+<a name="MarkerWithGhost.ghostposition_changed"></a>
+[ghostposition_changed](#MarkerWithGhost.ghostposition_changed) fires as position of ghost changes. If not in ghost mode,
+it still will fire.
+
+<a name="MarkerWithGhost.ghostanimationposition_changed"></a>
+[ghostanimationposition_changed](#MarkerWithGhost.ghostanimationposition_changed) fires as animationPosition of ghost
+changes. If not in ghost mode, it still will fire.
 
 # Under the hood
 

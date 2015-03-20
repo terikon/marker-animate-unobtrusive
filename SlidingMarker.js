@@ -20,7 +20,6 @@
 
         //default options
         var defaultOptions = {
-            isOverridePositionCallback: function () { return false; },
             easing: "easeInOutQuint",
             duration: 1000,
             animateFunction: google.maps.Marker.prototype.animateTo //will be applied on marker
