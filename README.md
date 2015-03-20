@@ -16,7 +16,7 @@ nice and smooth movement of all of your markers.
 In both cases, animated and non-animated marker will behave exactly the same.
 
 marker.getPosition() will always return final destination of marker, and position_changed event will only trigger when
-movement starts. That's why it called unobtrusive - your current code will not event notice animation, it's completely
+movement starts. That's why it called unobtrusive - your current code will not even notice animation, it's completely
 transparent.
 
 SlidingMarker is a complete rewrite of markerAnimateUnobtrusive library, with much-much more features and greatly improved
