@@ -242,6 +242,21 @@ marker.setPosition(point), we want to receive the point from marker.getPosition(
 
 These facts prevents marker-animate from usage with other libraries that depend on markers.
 
+The solution was to use decorator pattern. SlidingMarker inherits google.maps.Marker, so it can be used anywhere just like
+google.maps.Marker itself. For example, following is true:
+
+```js
+SlidingMarker instanceof google.maps.Marker // true 
+```
+
+But this marker is never attached to the map, even if you call marker.setMap(map). Instead, there's another visible marker,
+called _instance, that is attached to the map. You work directly with marker, and every operation you perform on marker is 
+redirected to _instance. For example, getMap() method called on marker will call getMap() on _instance .
+
+Every user event, like click, that triggers on visible _instance marker is redirected back to marker itself.
+
+This way animation that occur on visible _instance does not interfere with invisible marker that you work with.  
+
 # Things to consider for future versions
 
 - Make it possible to use any easing library, not just jquery_easing
