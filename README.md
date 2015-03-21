@@ -279,7 +279,7 @@ changes. If not in ghost mode, it still will fire.
 # Integration with OverlappingMarkerSpiderfier
 
 It's possible to add animation to glorious [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier)
-project by George MacKerron. You can see a demo here, just click a bunch of markers to see them clickable:
+project by George MacKerron. You can see a demo here, just click a bunch of markers to see them move:
 
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
 
