@@ -30,6 +30,7 @@ architecture.
 - [API](#api)
 - [AMD](#amd)
 - [MarkerWithGhost](#markerwithghost)
+- [Integration with OverlappingMarkerSpiderfier](#integration-with-overlappingmarkerspiderfier)
 - [Under the hood](#under-the-hood)
 - [Things to consider for future versions](#things-to-consider-for-future-versions)
 - [Contribute](#contribute)
@@ -200,6 +201,10 @@ Here is animated version of Geolocation Marker:
 
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/geolocationmarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/geolocationmarker-sliding.html)
 
+It can be used with [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier) as well:
+
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
+
 Sometimes libraries should be slightly modified to make use of animation. Animated versions of MarkerWithLabel and
 Geolocation Marker are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
 
@@ -271,6 +276,27 @@ it still will fire.
 [ghostanimationposition_changed](#MarkerWithGhost.ghostanimationposition_changed) fires as animationPosition of ghost
 changes. If not in ghost mode, it still will fire.
 
+# Integration with OverlappingMarkerSpiderfier
+
+It's possible to add animation to glorious [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier)
+project by George MacKerron. You can see a demo here, just click a bunch of markers:
+
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
+
+*Declaimer: I think this demo is one of few things one can stare are indefinitely, along with classic Windows Defragmenter and Mac
+minimize animation :)*
+
+To achieve this, slightly modified version of OverlappingMarkerSpiderfier was used that you can find in
+[vendor folder](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor), or
+in [this github fork](https://github.com/viskin/OverlappingMarkerSpiderfier/tree/animation).
+
+For curious ones, the trick to make OverlappingMarkerSpiderfier support animation is to use [MarkerWithGhost](#markerwithghost) instead
+of plain google.maps.Marker, and make calls from oms.js to ghosted properties, e.g. to getGhostPosition() instead of
+getPosition().
+
+Additional bonus arises from using MarkerWithGhost, and it is that no unnecessary position_changed events are triggered
+when spiderfying occurs. For you, getPostion on every marker return its actual position, and not effected by spiderfier.
+
 # Under the hood
 
 ## Imperfection of marker-animate
@@ -312,6 +338,8 @@ So, storing SlidingMarker takes *2 memory than storing instance of google.maps.M
 - Make it possible to use any easing library, not just jquery_easing
 - Make it possible to restore google maps to original state after initializeGlobally() called.
 - Make it possible to stop animation. Animation should stop as well when setPositionNotAnimated is called.
+- Improve speed.
+- Compile with closure-compiler. Annotations are already provided at [annotations folder](https://github.com/terikon/marker-animate-unobtrusive/tree/master/annotations). 
 
 # Contribute
 
