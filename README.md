@@ -279,23 +279,23 @@ changes. If not in ghost mode, it still will fire.
 # Integration with OverlappingMarkerSpiderfier
 
 It's possible to add animation to glorious [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier)
-project by George MacKerron. You can see a demo here, just click a bunch of markers:
+project by George MacKerron. You can see a demo here, just click a bunch of markers to see them clickable:
 
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
 
 *Declaimer: I think this demo is one of few things one can stare are indefinitely, along with classic Windows Defragmenter and Mac
 minimize animation :)*
 
-To achieve this, slightly modified version of OverlappingMarkerSpiderfier was used that you can find in
+To achieve this, slightly modified version of oms.js was used that you can find in
 [vendor folder](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor), or
 in [this github fork](https://github.com/viskin/OverlappingMarkerSpiderfier/tree/animation).
 
 For curious ones, the trick to make OverlappingMarkerSpiderfier support animation is to use [MarkerWithGhost](#markerwithghost) instead
-of plain google.maps.Marker, and make calls from oms.js to ghosted properties, e.g. to getGhostPosition() instead of
+of plain google.maps.Marker, and make oms.js call ghosted properties, e.g. to getGhostPosition() instead of
 getPosition().
 
 Additional bonus arises from using MarkerWithGhost, and it is that no unnecessary position_changed events are triggered
-when spiderfying occurs. For you, getPostion on every marker return its actual position, and not effected by spiderfier.
+when spiderfying occurs. For you, getPostion on your marker will return its actual position, and will not be effected by spiderfier.
 
 # Under the hood
 
