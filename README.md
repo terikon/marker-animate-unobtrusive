@@ -339,6 +339,7 @@ So, storing SlidingMarker takes *2 memory than storing instance of google.maps.M
 - Make it possible to restore google maps to original state after initializeGlobally() called.
 - Make it possible to stop animation. Animation should stop as well when setPositionNotAnimated is called.
 - Improve speed.
+- Provide support for alternative animation engine, e.g. [Velocity](http://julian.com/research/velocity/).
 - Compile with closure-compiler. Annotations are already provided at [annotations folder](https://github.com/terikon/marker-animate-unobtrusive/tree/master/annotations). 
 
 # Contribute
