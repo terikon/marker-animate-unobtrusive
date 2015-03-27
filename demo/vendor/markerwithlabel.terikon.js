@@ -146,7 +146,9 @@ MarkerLabel_.prototype.onAdd = function () {
     MarkerLabel_.getSharedCross.processed = true;
   }
 
-  var position_changed = this.marker_.animationPosition !== undefined ? "animationposition_changed" : "position_changed";
+  var position_changed = this.marker_.ghostAnimationPosition !== undefined ? "ghostanimationposition_changed"
+      : this.marker_.animationPosition !== undefined ? "animationPosition"
+      : "position_changed";
 
   this.listeners_ = [
     google.maps.event.addDomListener(this.eventDiv_, "mouseover", function (e) {
@@ -435,7 +437,7 @@ MarkerLabel_.prototype.setAnchor = function () {
  * @private
  */
 MarkerLabel_.prototype.setPosition = function (yOffset) {
-  var getPosition = this.marker_.getAnimationPosition || this.marker_.getPosition;
+  var getPosition = this.marker_.getGhostAnimationPosition || this.marker_.getAnimationPosition || this.marker_.getPosition;
   var position = this.getProjection().fromLatLngToDivPixel(getPosition.call(this.marker_));
   if (typeof yOffset === "undefined") {
     yOffset = 0;
