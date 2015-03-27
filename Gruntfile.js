@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 		uglify: {
 			options: {
 				sourceMap: true,
-				banner: '/*! <%= pkg.title %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				banner: '/*! <%= grunt.task.current.target %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> (C) 2015 Terikon Software */\n'
 			},
 			SlidingMarker: {
 				src: 'SlidingMarker.js',

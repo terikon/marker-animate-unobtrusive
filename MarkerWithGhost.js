@@ -31,7 +31,7 @@
         var MarkerWithGhost = function (opt_options) {
 
             this.ghostPosition = null;
-            this.animationGhostPosition = null;
+            this.ghostAnimationPosition = null;
 
             // Call the parent constructor.
             SlidingMarker.call(this, opt_options);
