@@ -148,7 +148,7 @@ Example:
 var marker = new SlidingMarker({
     position: myLatlng,
     map: map,
-    title: 'I\m sliding marker',
+    title: "I'm sliding marker",
     duration: 2000
 });
 ...
