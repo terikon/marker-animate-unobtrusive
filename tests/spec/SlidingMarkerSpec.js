@@ -126,12 +126,10 @@
 
             describe("after calling setMap()", function () {
 
-                var mapChangedListener, map_changes = [];
+                var mapEventSpy;
 
                 beforeEach(function () {
-                    mapChangedListener = google.maps.event.addListener(marker, "map_changed", function () {
-                        map_changes.push({ value: marker.getMap() });
-                    });
+                    mapEventSpy = testHelper.spyEvent(marker, "map_changed", marker.getMap);
 
                     marker.setMap(map);
                 });
@@ -169,17 +167,16 @@
                 describe("map_changed", function () {
 
                     it("should be triggered once", function () {
-                        expect(map_changes.length).toEqual(1);
+                        expect(mapEventSpy.changes.length).toEqual(1);
                     });
                     it("should contain correct map value while in handler", function () {
-                        expect(map_changes[0].value).toBe(map);
+                        expect(mapEventSpy.changes[0].value).toBe(map);
                     });
 
                 });
 
                 afterEach(function () {
-                    google.maps.event.removeListener(mapChangedListener);
-                    map_changes = [];
+                    mapEventSpy.dispose();
                     marker.setMap(null);
                 });
 
@@ -194,12 +191,28 @@
 
         describe("marker created", function () {
 
+            var animateCompleteDeferred = new $.Deferred(),
+                testAnimateFunctionAdapter = function (m, destPosition, easing, duration) {
+                    //TODO
+                    google.maps.Marker.prototype.animateTo.call(m, destPosition, {
+                        easing: easing,
+                        duration: duration,
+                        complete: function () {
+                            animateCompleteDeferred.resolve();
+                        }
+                    });
+                };
+
             beforeEach(function () {
+
                 marker = new SlidingMarker({
                     position: myLatlng,
                     map: map,
-                    title: 'Hello World!'
+                    title: 'Hello World!',
+                    duration: 500,
+                    animateFunctionAdapter: testAnimateFunctionAdapter
                 });
+
             });
 
             describe("click event on _instance", function () {
@@ -236,6 +249,43 @@
 
                     expect(marker._instance.getZIndex()).toEqual(12321);
 
+                });
+
+            });
+
+            describe("calling setPosition", function () {
+
+                var startPosition,
+                    newPosition = new google.maps.LatLng(51, 12),
+                    positionEventSpy,
+                    animationPositionEventSpy;
+
+                beforeEach(function (done) {
+                    startPosition = marker.getPosition();
+
+                    positionEventSpy = testHelper.spyEvent(marker, "position_changed", marker.getPosition);
+                    animationPositionEventSpy = testHelper.spyEvent(marker, "animationposition_changed", marker.getAnimationPosition);
+
+                    animateCompleteDeferred = new $.Deferred();
+                    marker.setPosition(newPosition);
+                    animateCompleteDeferred.then(done);
+                });
+
+                it("position_changed should be called once", function () {
+                    expect(positionEventSpy.changes.length).toEqual(1);
+                });
+
+                it("animationposition_changed should be called multiple times", function () {
+                    expect(animationPositionEventSpy.changes.length).toBeGreaterThan(1);
+                });
+
+                afterEach(function (done) {
+                    positionEventSpy.dispose();
+                    animationPositionEventSpy.dispose();
+
+                    animateCompleteDeferred = new $.Deferred();
+                    marker.setPosition(myLatlng);
+                    animateCompleteDeferred.then(done);
                 });
 
             });

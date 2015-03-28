@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 		
 		jasmine: {
 			all: {
-				src: ["SlidingMarker.js", "MarkerWithGhost.js"],
+				src: ["SlidingMarker.js", "MarkerWithGhost.js", "tests/testHelper.js"],
 				options: {
 					specs: "tests/spec/*Spec.js",
 					vendor: [

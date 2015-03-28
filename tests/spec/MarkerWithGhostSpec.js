@@ -31,5 +31,25 @@
 
     });
 
-    
+    describe("MarkerWithGhost", function () {
+
+        var map, marker, myLatlng = new google.maps.LatLng(53.871963457471786, 10.689697265625);
+
+        beforeAll(function () {
+            //Create map
+
+            var mapOptions = {
+                zoom: 4,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var canvas = $("<canvas/>");
+            map = new google.maps.Map(canvas[0], mapOptions);
+        });
+
+
+
+    });
+
+
 });
