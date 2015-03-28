@@ -180,9 +180,6 @@
                 afterEach(function () {
                     google.maps.event.removeListener(mapChangedListener);
                     map_changes = [];
-                });
-
-                afterEach(function () {
                     marker.setMap(null);
                 });
 

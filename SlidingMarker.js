@@ -94,7 +94,7 @@
 
                 //from MVCObject
                 addListener: function (eventName, handler) {
-                    var target = getEventTarget.call(this, eventName);
+                    var target = (eventName === "map_changed") ? this._instance : getEventTarget.call(this, eventName);
                     return this.originalAddListener.apply(target, arguments);
                 },
 
@@ -115,7 +115,7 @@
         //call it on SlidingMarker
         var getEventTarget = function (eventName) {
             //redirect _changed events to this, other events to _instance
-            if (eventName.endsWith("_changed") && eventName !== "map_changed") { //all _changed except of map redirect to this
+            if (eventName.endsWith("_changed")) { //all _changed redirect to this
                 return this;
             } 
             return this._instance;
@@ -123,18 +123,26 @@
 
         var originalAddListener = google.maps.event.addListener;
         google.maps.event.addListener = function (instance, eventName, handler) {
-            var newHandler;
-
-            //If event is position_changed, supply alternative handler
+            //Redirect listener to target
             if (instance instanceof SlidingMarker) {
-                var target = getEventTarget.call(instance, eventName);
-                newHandler = function () {
-                    return handler.apply(this, arguments);
-                };
-                return originalAddListener.call(this, target, eventName, newHandler);
+                var target = (eventName === "map_changed") ? instance._instance : getEventTarget.call(instance, eventName);
+                return originalAddListener.call(this, target, eventName, handler);
             }
 
             return originalAddListener.apply(this, arguments);
+        };
+
+        var originalTrigger = google.maps.event.trigger;
+        google.maps.event.trigger = function (instance, eventName) {
+            //Replace instance parameter to target
+            if (instance instanceof SlidingMarker) {
+                var target = (eventName === "map_changed") ? instance : getEventTarget.call(instance, eventName),
+                    newArgs = [target].concat(Array.prototype.slice.call(arguments, 1)); //replaces instance parameter with target
+
+                return originalTrigger.apply(this, newArgs);
+            }
+
+            return originalTrigger.apply(this, arguments);
         };
 
         //just string helper

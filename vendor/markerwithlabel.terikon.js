@@ -147,7 +147,7 @@ MarkerLabel_.prototype.onAdd = function () {
   }
 
   var position_changed = this.marker_.ghostAnimationPosition !== undefined ? "ghostanimationposition_changed"
-      : this.marker_.animationPosition !== undefined ? "animationPosition"
+      : this.marker_.animationPosition !== undefined ? "animationposition_changed"
       : "position_changed";
 
   this.listeners_ = [
