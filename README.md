@@ -139,8 +139,8 @@ In addition, following options are supported to fine-tune animation for each mar
 - **easing** - "easeInOutQuint" by default. Possible values are same as in
 [jquery.easing](http://gsgd.co.uk/sandbox/jquery/easing/) library.
 - **duration** - in ms, 1000 by default.
-- **animateFunction** - by default, SlidingMarker assumes that marker is enhanced with animateTo method, but you can provide
-alternative animation function to call on marker.
+- **animateFunctionAdapter** - by default, SlidingMarker assumes that google.maps.Marker.prototype is enhanced with animateTo method, but you can provide alternative animation adapter. It should be function with following declaration:
+animateFunctionAdapter(marker, destPosition, easing, duration).
 
 Example:
 
@@ -149,7 +149,8 @@ var marker = new SlidingMarker({
     position: myLatlng,
     map: map,
     title: "I'm sliding marker",
-    duration: 2000
+    duration: 2000,
+    easing: "easeOutExpo"
 });
 ...
 // use marker as ordinal google map's marker.

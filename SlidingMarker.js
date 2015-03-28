@@ -22,7 +22,14 @@
         var defaultOptions = {
             easing: "easeInOutQuint",
             duration: 1000,
-            animateFunction: google.maps.Marker.prototype.animateTo //will be applied on marker
+            animateFunctionAdapter: function (marker, destPosition, easing, duration) {
+                google.maps.Marker.prototype.animateTo.call(marker, destPosition, {
+                    easing: easing,
+                    duration: duration,
+                    complete: function () {
+                    }
+                });
+            }
         };
 
         var inherits = function (childCtor, parentCtor) {
@@ -76,14 +83,8 @@
                     }
 
                     //apply animation function
-                    //TODO: provide some kind of adapter
                     //this will cause many animationposition_changed events
-                    that.get("animateFunction").call(that._instance, position, {
-                        easing: that.get("easing"),
-                        duration: that.get("duration"),
-                        complete: function () {
-                        }
-                    });
+                    that.get("animateFunctionAdapter").call(null, that._instance, position, that.get("easing"), that.get("duration"));
                 },
 
                 //setValues() will call set(), no need to override
@@ -154,10 +155,6 @@
         var SlidingMarker = function (opt_options) {
 
             opt_options = $.extend({}, defaultOptions, opt_options);
-
-            if (!opt_options.animateFunction) { //handle a case where animateTo defined after SlidingMarker defined
-                opt_options.animateFunction = google.maps.Marker.prototype.animateTo;
-            }
 
             this._instance = new GoogleMarker(opt_options);
 
