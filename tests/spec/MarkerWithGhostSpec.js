@@ -55,7 +55,9 @@
                         easing: easing,
                         duration: duration,
                         complete: function () {
-                            animateCompleteDeferred.resolve();
+                            if (animateCompleteDeferred) {
+                                animateCompleteDeferred.resolve();
+                            }
                         }
                     });
                 };
@@ -66,7 +68,7 @@
                     position: myLatlng,
                     map: map,
                     title: 'Hello World!',
-                    duration: 500,
+                    duration: 300,
                     animateFunctionAdapter: testAnimateFunctionAdapter
                 });
 
@@ -193,6 +195,140 @@
                     ghostPositionEventSpy.dispose();
                     animationPositionEventSpy.dispose();
                     ghostAnimationPositionEventSpy.dispose();
+                });
+
+            });
+
+            describe("with second marker", function () {
+
+                var secondMarker, secondLatlng = new google.maps.LatLng(2, 2), thirdLatlng = new google.maps.LatLng(3, 3);
+
+                beforeEach(function () {
+
+                    secondMarker = new MarkerWithGhost({
+                        position: secondLatlng,
+                        map: map,
+                        title: 'Title of second marker',
+                        duration: 300
+                    });
+
+                });
+
+                describe("binding position property", function () {
+
+                    beforeEach(function () {
+
+                        marker.bindTo('position', secondMarker);
+
+                    });
+
+                    it("positions should have same value", function () {
+
+                        expect(marker.get('position')).toEqual(secondLatlng);
+
+                        expect(marker.get('position')).toEqual(secondMarker.get('position'));
+
+                    });
+
+                    it("ghostPositions should be equal to position", function () {
+
+                        expect(marker.get('ghostPosition')).toEqual(marker.get('position'));
+
+                    });
+
+                    describe("after change", function () {
+
+                        beforeEach(function () {
+
+                            secondMarker.set('position', thirdLatlng);
+
+                        });
+
+                        it("positionsstill should have same value", function () {
+
+                            expect(marker.get('position')).toEqual(thirdLatlng);
+
+                            expect(marker.get('position')).toEqual(secondMarker.get('position'));
+
+                        });
+
+                        it("ghostPositions still should be equal to position", function () {
+
+                            expect(marker.get('ghostPosition')).toEqual(marker.get('position'));
+
+                        });
+
+                    });
+
+                    afterEach(function () {
+
+                        marker.unbind('position');
+
+                    });
+
+                });
+
+                describe("binding ghostPosition property", function () {
+
+                    beforeEach(function () {
+
+                        marker.bindTo("ghostPosition", secondMarker);
+
+                    });
+
+                    it("ghostPositions should have same value", function () {
+
+                        expect(marker.get('ghostPosition')).toEqual(secondLatlng);
+
+                        expect(marker.get('ghostPosition')).toEqual(secondMarker.get('ghostPosition'));
+
+                    });
+
+                    it("should have no influence on position property", function () {
+
+                        expect(marker.get('position')).toEqual(myLatlng);
+
+                        expect(secondMarker.get('position')).toEqual(secondLatlng);
+
+                    });
+
+                    describe("after change", function () {
+
+                        beforeEach(function () {
+
+                            secondMarker.set('ghostPosition', thirdLatlng);
+
+                        });
+
+                        it("ghostPositions still should have same value", function () {
+
+                            expect(marker.get('ghostPosition')).toEqual(thirdLatlng);
+
+                            expect(marker.get('ghostPosition')).toEqual(secondMarker.get('ghostPosition'));
+
+                        });
+
+                        it("still should have no influence on position property", function () {
+
+                            expect(marker.get('position')).toEqual(myLatlng);
+
+                            expect(secondMarker.get('position')).toEqual(secondLatlng);
+
+                        });
+
+                    });
+
+                    afterEach(function () {
+
+                        marker.unbind('ghostPosition');
+
+                    });
+
+                });
+
+                afterEach(function () {
+                    secondMarker.setMap(null);
+                    secondMarker = null;
                 });
 
             });

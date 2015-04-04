@@ -36,6 +36,7 @@
             // Call the parent constructor.
             SlidingMarker.call(this, opt_options);
 
+            this.bindTo("ghostPosition", this, "position");
             this.bindTo("ghostAnimationPosition", this._instance, "position");
         };
 
@@ -46,17 +47,36 @@
 
             _isGhost: false,
 
-            setPosition: function (position) {
+            set: function (key, value) {
+                if (key === "position") {
 
-                if (this._isGhost) {
-                    this.bindTo("animationPosition", this._instance, "position");
+                    if (this._isGhost) {
+
+                        this.bindTo("animationPosition", this._instance, "position");
+                        this.bindTo("ghostPosition", this, "position");
+
+                        this._isGhost = false;
+                    }
+
+                } else if (key === "ghostPosition") {
+
+                    if (!this._isGhost) {
+
+                        this.unbind("animationPosition");
+                        this.unbind("ghostPosition");
+
+                        this._isGhost = true;
+                    }
+
+                    this.originalSet("ghostPosition", value);
+
+                    SlidingMarker.prototype._setInstancePositionAnimated.call(this, value);
+
+                    return;
+
                 }
 
-                this._isGhost = false;
-
-                this.originalSet("ghostPosition", position);
-
-                SlidingMarker.prototype.setPosition.call(this, position);
+                SlidingMarker.prototype.set.apply(this, arguments);
             },
 
             getGhostPosition: function () {
@@ -64,15 +84,7 @@
             },
 
             setGhostPosition: function (ghostPosition) {
-
-                if (!this._isGhost) {
-                    this.unbind("animationPosition");
-                }
-
-                this._isGhost = true;
-
                 this.set("ghostPosition", ghostPosition);
-                SlidingMarker.prototype._setInstancePositionAnimated.call(this, ghostPosition);
             },
 
             getGhostAnimationPosition: function () {

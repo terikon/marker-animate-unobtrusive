@@ -206,6 +206,11 @@ It can be used with [OverlappingMarkerSpiderfier](https://github.com/jawj/Overla
 
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
 
+This demonstrates [MarkerWithGhost](#markerwithghost). Click on map to call setPosition. Right-click to call setGhostPosition.
+Only the "ghost" will move, causing no events.
+
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/SlidingMarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/markermove-withghost.html)
+
 Sometimes libraries should be slightly modified to make use of animation. Animated versions of MarkerWithLabel and
 Geolocation Marker are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
 

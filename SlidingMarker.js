@@ -78,7 +78,9 @@
                     }
 
                     if (!position || !that._instance.getPosition()) { //If position is set for a first time, no animation should be applied
-                        that._instance.setPosition(position);
+                        if (that._instance.getPosition() !== position) {
+                            that._instance.setPosition(position);
+                        }
                         return;
                     }
 
