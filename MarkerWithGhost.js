@@ -50,23 +50,11 @@
             set: function (key, value) {
                 if (key === "position") {
 
-                    if (this._isGhost) {
-
-                        this.bindTo("animationPosition", this._instance, "position");
-                        this.bindTo("ghostPosition", this, "position");
-
-                        this._isGhost = false;
-                    }
+                    this._turnGhostModeOff();
 
                 } else if (key === "ghostPosition") {
 
-                    if (!this._isGhost) {
-
-                        this.unbind("animationPosition");
-                        this.unbind("ghostPosition");
-
-                        this._isGhost = true;
-                    }
+                    this._turnGhostModeOn();   
 
                     this.originalSet("ghostPosition", value);
 
@@ -79,6 +67,45 @@
                 SlidingMarker.prototype.set.apply(this, arguments);
             },
 
+            _rebindEventListener: null,
+
+            _turnGhostModeOn: function () {
+                if (!this._isGhost) {
+
+                    if (!this._rebindEventListener) {
+                        google.maps.event.removeListener(this._rebindEventListener);
+                        this._rebindEventListener = null;
+                    }
+
+                    this.unbind("animationPosition");
+                    this.unbind("ghostPosition");
+
+                    this._isGhost = true;
+                }
+            },
+
+            _turnGhostModeOff: function () {
+                var that = this;
+
+                if (this._isGhost) {
+
+                    //rebind only after _instance's position equals position, to prevent raising animationposition_change events for ghost
+                    this._rebindEventListener = google.maps.event.addListener(this._instance, "position_changed", function () {
+                        if (that.getPosition() === that._instance.getPosition()) {
+
+                            that.bindTo("animationPosition", that._instance, "position");
+
+                            google.maps.event.removeListener(that._rebindEventListener);
+                            that._rebindEventListener = null;
+                        }
+                    });
+
+                    this.bindTo("ghostPosition", this, "position");
+
+                    this._isGhost = false;
+                }
+            },
+
             getGhostPosition: function () {
                 return this.get("ghostPosition");
             },
@@ -89,6 +116,12 @@
 
             getGhostAnimationPosition: function () {
                 return this.get("ghostAnimationPosition");
+            },
+
+            //This will be called by binding created with marker.bindTo() method, instead of call to set("position").
+            position_changed: function () {
+                this._turnGhostModeOff();
+                SlidingMarker.prototype.position_changed.apply(this, arguments);
             }
 
         });
