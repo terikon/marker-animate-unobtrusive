@@ -93,6 +93,16 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
      */
     this.position = null;
 
+    //Terikon
+    /**
+     * @expose
+     * @type {google.maps.LatLng?}
+     */
+    this.ghostPosition = null;
+
+    //Terikon
+    this.visible = null;
+
     /**
      * @expose
      * @type {google.maps.Map?}
@@ -105,6 +115,9 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
         ({ enableHighAccuracy: true, maximumAge: 1000 }));
 
     this.circle_.bindTo('map', this.marker_);
+
+    //Terikon
+    this.bindTo('visible', this.marker_);
 
     if (opt_map) {
         this.setMap(opt_map);
@@ -160,6 +173,36 @@ GeolocationMarker.prototype.getPosition = function () {
     return this.position;
 };
 
+//Terikon
+/** @return {google.maps.LatLng?} */
+GeolocationMarker.prototype.getGhostPosition = function () {
+    return this.get('ghostPosition');
+};
+
+//Terikon
+/**
+ * @param {google.maps.LatLng|google.maps.LatLngLiteral} ghostPosition
+ * @return {undefined}
+ */
+GeolocationMarker.prototype.setGhostPosition = function (ghostPosition) {
+    this.marker_.setGhostPosition(ghostPosition);
+};
+
+//Terikon
+GeolocationMarker.prototype.getVisible = function () {
+    return this.get('visible');
+};
+
+//Terikon
+GeolocationMarker.prototype.getZIndex = function () {
+    return this.marker_.getZIndex();
+};
+
+//Terikon
+GeolocationMarker.prototype.setZIndex = function (zIndex) {
+    this.marker_.setZIndex(zIndex);
+};
+
 /** @return {google.maps.LatLngBounds?} */
 GeolocationMarker.prototype.getBounds = function () {
     if (this.position) {
@@ -201,6 +244,10 @@ GeolocationMarker.prototype.setMap = function (map, /*Terikon*/isWatchPosition) 
         }
     } else {
         this.marker_.unbind('position');
+        //Terikon
+        if (this.marker_.ghostPosition !== undefined) {
+            this.unbind('ghostPosition');
+        }
         this.circle_.unbind('center');
         this.circle_.unbind('radius');
         this.accuracy = null;
@@ -249,7 +296,13 @@ GeolocationMarker.prototype.updatePosition_ = function (position) {
             return;
         }
         this.marker_.setMap(this.map);
+
+
         this.marker_.bindTo('position', this);
+        //Terikon
+        if (this.marker_.ghostPosition !== undefined) {
+            this.bindTo('ghostPosition', this.marker_);
+        }
 
         //Terikon: animation
         if (this.marker_.animationPosition !== undefined) {

@@ -260,14 +260,14 @@ Note: The Google Maps API v3 must be included *before* this code
         nonNearbyMarkers = [];
         nDist = this['nearbyDistance'];
         pxSq = nDist * nDist;
-        markerPt = this.llToPt(marker.ghostPosition);
+        markerPt = this.llToPt(marker.getGhostPosition());
         ref2 = this.markers;
         for (l = 0, len1 = ref2.length; l < len1; l++) {
           m = ref2[l];
           if (!((m.map != null) && m.getVisible())) {
             continue;
           }
-          mPt = this.llToPt(m.ghostPosition);
+          mPt = this.llToPt(m.getGhostPosition());
           if (this.ptDistanceSq(mPt, markerPt) < pxSq) {
             nearbyMarkerData.push({
               marker: m,
@@ -295,7 +295,7 @@ Note: The Google Maps API v3 must be included *before* this code
       }
       nDist = this['nearbyDistance'];
       pxSq = nDist * nDist;
-      markerPt = this.llToPt(marker.ghostPosition);
+      markerPt = this.llToPt(marker.getGhostPosition());
       markers = [];
       ref2 = this.markers;
       for (l = 0, len1 = ref2.length; l < len1; l++) {
@@ -303,7 +303,7 @@ Note: The Google Maps API v3 must be included *before* this code
         if (m === marker || (m.map == null) || !m.getVisible()) {
           continue;
         }
-        mPt = this.llToPt((ref3 = (ref4 = m['_omsData']) != null ? ref4.usualPosition : void 0) != null ? ref3 : m.ghostPosition);
+        mPt = this.llToPt((ref3 = (ref4 = m['_omsData']) != null ? ref4.usualPosition : void 0) != null ? ref3 : m.getGhostPosition());
         if (this.ptDistanceSq(mPt, markerPt) < pxSq) {
           markers.push(m);
           if (firstOnly) {
@@ -328,7 +328,7 @@ Note: The Google Maps API v3 must be included *before* this code
         for (l = 0, len1 = ref2.length; l < len1; l++) {
           m = ref2[l];
           results.push({
-            pt: this.llToPt((ref3 = (ref4 = m['_omsData']) != null ? ref4.usualPosition : void 0) != null ? ref3 : m.ghostPosition),
+            pt: this.llToPt((ref3 = (ref4 = m['_omsData']) != null ? ref4.usualPosition : void 0) != null ? ref3 : m.getGhostPosition()),
             willSpiderfy: false
           });
         }
@@ -423,13 +423,13 @@ Note: The Google Maps API v3 must be included *before* this code
           marker = nearestMarkerDatum.marker;
           leg = new gm.Polyline({
             map: this.map,
-            path: [marker.ghostPosition, footLl],
+            path: [marker.getGhostPosition(), footLl],
             strokeColor: this['legColors']['usual'][this.map.mapTypeId],
             strokeWeight: this['legWeight'],
             zIndex: this['usualLegZIndex']
           });
           marker['_omsData'] = {
-            usualPosition: marker.ghostPosition,
+            usualPosition: marker.getGhostPosition(),
             leg: leg
           };
           if (this['legColors']['highlighted'][this.map.mapTypeId] !== this['legColors']['usual'][this.map.mapTypeId]) {
