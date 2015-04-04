@@ -2,7 +2,8 @@
 
 var testHelper = testHelper || {};
 
-//returns event spy {changes, listener, dispose}
+//returns event spy {changes:array, listener:object, dispose:function}.
+//changes[i] is {value:*}.
 testHelper.spyEvent = function (instance, eventName, valueFunc) {
 	'use strict';
 	

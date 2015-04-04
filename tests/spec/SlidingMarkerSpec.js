@@ -188,12 +188,10 @@
 
         });
 
+        describe("marker", function () {
 
-        describe("marker created", function () {
-
-            var animateCompleteDeferred = new $.Deferred(),
+            var animateCompleteDeferred,
                 testAnimateFunctionAdapter = function (m, destPosition, easing, duration) {
-                    //TODO
                     google.maps.Marker.prototype.animateTo.call(m, destPosition, {
                         easing: easing,
                         duration: duration,
@@ -267,16 +265,26 @@
                     animationPositionEventSpy = testHelper.spyEvent(marker, "animationposition_changed", marker.getAnimationPosition);
 
                     animateCompleteDeferred = new $.Deferred();
-                    marker.setPosition(newPosition);
                     animateCompleteDeferred.then(done);
+
+                    marker.setPosition(newPosition);
                 });
 
                 it("position_changed should be called once", function () {
                     expect(positionEventSpy.changes.length).toEqual(1);
                 });
 
+                it("position_changed call should be new position", function () {
+                    expect(positionEventSpy.changes[0].value).toEqual(newPosition);
+                });
+
                 it("animationposition_changed should be called multiple times", function () {
                     expect(animationPositionEventSpy.changes.length).toBeGreaterThan(1);
+                });
+
+                it("animationposition_changed last call should be new position", function () {
+                    var changes = animationPositionEventSpy.changes;
+                    expect(changes[changes.length-1].value).toEqual(newPosition);
                 });
 
                 afterEach(function (done) {
@@ -284,10 +292,18 @@
                     animationPositionEventSpy.dispose();
 
                     animateCompleteDeferred = new $.Deferred();
+                    animateCompleteDeferred.then(function () {
+                        animateCompleteDeferred = null;
+                        done();
+                    });
+
                     marker.setPosition(myLatlng);
-                    animateCompleteDeferred.then(done);
                 });
 
+            });
+
+            it("should have animationPosition initialized", function () {
+                expect(marker.getAnimationPosition()).toEqual(myLatlng);
             });
 
             afterEach(function () {
