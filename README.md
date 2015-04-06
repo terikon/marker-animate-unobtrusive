@@ -1,6 +1,6 @@
 # marker-animate-unobtrusive aka SlidingMarker
 
-Makes Google Maps markers to move naturally in animated way. This looks more natural for user than just marker jump to position.
+Makes Google Maps markers move naturally in animated way. This looks more natural for user than just marker jump to position.
 Like this. Click on map to move marker there:
 
 [![alt tag](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/SlidingMarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/markermove-sliding.html)
