@@ -28,15 +28,28 @@ module.exports = function(grunt) {
 		},
 		
 		jasmine: {
-			all: {
-				src: ["SlidingMarker.js", "MarkerWithGhost.js", "tests/testHelper.js"],
+			//These will run with jQuery loaded before the library.
+			"with jQuery": {
+				src: ['SlidingMarker.js', 'MarkerWithGhost.js', 'tests/testHelper.js'],
 				options: {
-					specs: "tests/spec/*Spec.js",
+					specs: 'tests/spec/*Spec.js',
 					vendor: [
-						"https://maps.googleapis.com/maps/api/js?sensor=false",
-						"node_modules/jquery/dist/jquery.min.js",
-						"vendor/jquery.easing.1.3.js",
-						"vendor/markerAnimate.js"
+						'https://maps.googleapis.com/maps/api/js?sensor=false',
+						'node_modules/jquery/dist/jquery.min.js',
+						'vendor/jquery.easing.1.3.js',
+						'vendor/markerAnimate.js'
+					]
+				}
+			},
+			//These will run with jQuery loaded after the library, so it will be accessible  only to specs.
+			"without jQuery": {
+				src: ['SlidingMarker.js', 'MarkerWithGhost.js',
+					'node_modules/jquery/dist/jquery.min.js', 'vendor/jquery.easing.1.3.js', 'vendor/markerAnimate.js',
+					'tests/testHelper.js'],
+				options: {
+					specs: 'tests/spec/*Spec.js',
+					vendor: [
+						'https://maps.googleapis.com/maps/api/js?sensor=false'
 					]
 				}
 			}

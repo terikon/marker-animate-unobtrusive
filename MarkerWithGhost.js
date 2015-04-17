@@ -16,6 +16,29 @@
     function (root, $, SlidingMarker) {
         'use strict';
 
+        //Let jQuery be soft dependency
+        $ = $ || {};
+        $.extend = $.extend || function extend(obj) {
+            //Taken (and modified) from here: http://stackoverflow.com/a/14604815/1691132
+            Array.prototype.slice.call(arguments, 1).forEach(function (source) {
+                if (source) {
+                    for (var prop in source) {
+                        if (source[prop] && source[prop].constructor === Object) {
+                            if (!obj[prop] || obj[prop].constructor === Object) {
+                                obj[prop] = obj[prop] || {};
+                                extend(obj[prop], source[prop]);
+                            } else {
+                                obj[prop] = source[prop];
+                            }
+                        } else {
+                            obj[prop] = source[prop];
+                        }
+                    }
+                }
+            });
+            return obj;
+        };
+
         var inherits = function (childCtor, parentCtor) {
             /* @constructor */
             function TempCtor() { }
