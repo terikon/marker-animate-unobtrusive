@@ -50,6 +50,12 @@ npm install marker-animate-unobtrusive
 All needed dependencies are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
 These are jquery.easing and markerAnimate.
 
+## with bower
+
+```
+bower install marker-animate-unobtrusive
+```
+
 ## include on page
 
 Download **SlidingMarker.js**
