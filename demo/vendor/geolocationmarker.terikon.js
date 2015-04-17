@@ -305,6 +305,7 @@ GeolocationMarker.prototype.updatePosition_ = function (position) {
         }
 
         //Terikon: animation
+        //TODO: it would be nice to have circle with separate animation that always moves from current circle position to position.
         if (this.marker_.animationPosition !== undefined) {
             this.circle_.bindTo('center', this.marker_, 'animationPosition');
         } else {
