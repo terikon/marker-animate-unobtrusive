@@ -87,6 +87,9 @@ So dependencies look like follows:
 <!-- SlidingMarker hides details from you - your markers are just animated automagically -->
 <script src="SlidingMarker.min.js"></script>
 ```
+Note: [jQuery](http://jquery.com/download) is soft dependency, you can prefer not to include it. But if you decide not to,
+you should provide [alternative animation routine](#SlidingMarker.options.animateFunctionAdapter), and should not include
+jquery.easing and markerAnimate libraries.
 
 # Use
 
@@ -145,6 +148,7 @@ In addition, following options are supported to fine-tune animation for each mar
 - **easing** - "easeInOutQuint" by default. Possible values are same as in
 [jquery.easing](http://gsgd.co.uk/sandbox/jquery/easing/) library.
 - **duration** - in ms, 1000 by default.
+<a name="SlidingMarker.options.animateFunctionAdapter"></a>
 - **animateFunctionAdapter** - by default, SlidingMarker assumes that google.maps.Marker.prototype is enhanced with animateTo method, but you can provide alternative animation adapter. It should be function with following declaration:
 animateFunctionAdapter(marker, destPosition, easing, duration).
 
