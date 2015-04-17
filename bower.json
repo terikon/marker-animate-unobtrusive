@@ -1,8 +1,18 @@
 {
   "name": "marker-animate-unobtrusive",
+  "main": "SlidingMarker.js",
   "version": "0.2.0",
   "description": "Unobtrusive Google Maps animated marker",
-  "main": "SlidingMarker.js",
+  
+  "homepage": "https://github.com/terikon/marker-animate-unobtrusive",
+  "authors": [
+	{ "name": "Terikon Software", "email": "npm@terikon.com", "homepage": "http://il.linkedin.com/in/romanviskin" }
+  ],
+  
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
   
   "repository": {
     "type": "git",
@@ -18,6 +28,11 @@
 
   "license": "MIT",
   
-  "authors": [{ "name": "Terikon Software", "email": "npm@terikon.com", "homepage": "http://il.linkedin.com/in/romanviskin" }]
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ]
   
 }
