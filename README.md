@@ -351,7 +351,7 @@ So, storing SlidingMarker takes *2 memory than storing instance of google.maps.M
 
 # Things to consider for future versions
 
-- Make it possible to use any easing library, not just jquery_easing
+- ~~ Make it possible to use any easing library, not just jquery_easing ~~
 - Make it possible to restore google maps to original state after initializeGlobally() called.
 - Make it possible to stop animation. Animation should stop as well when setPositionNotAnimated is called.
 - Improve speed.
