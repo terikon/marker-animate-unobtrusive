@@ -3,3 +3,5 @@ node_js:
     - "stable"
 before_script:
     - npm install -g grunt-cli
+notifications:
+    email: false
