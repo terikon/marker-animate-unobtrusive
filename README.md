@@ -2,8 +2,9 @@
 
 [![Build Status](https://travis-ci.org/terikon/marker-animate-unobtrusive.svg?branch=master)](https://travis-ci.org/terikon/marker-animate-unobtrusive)
 
-Makes Google Maps markers move naturally in animated way. This looks more natural for user than just marker jump to position.
-Like this. Click on map to move marker there:
+Enables a Google Maps marker to move from its original position to its destination in a natural, animated way
+(unlike the current method of suddenly appearing on the destination spot). Please click on the map below in order to see
+how it works. Select destination on the map to move marker to.
 
 [![alt tag](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/SlidingMarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/markermove-sliding.html)
 
