@@ -207,6 +207,10 @@ You can use SlidingMarker with other libraries that enhance original marker, lik
 [MarkerWithLabel](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerwithlabel/docs/reference.html) or
 [Geolocation Marker](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/docs/reference.html).
 
+It can be used with [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier) as well:
+
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
+
 Here is animated MarkerWithLabel for a first time:
 
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/markerWithLabel.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/markerwithlabelmove-sliding.html)
@@ -215,9 +219,9 @@ Here is animated version of Geolocation Marker:
 
 [![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/geolocationmarker.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/geolocationmarker-sliding.html)
 
-It can be used with [OverlappingMarkerSpiderfier](https://github.com/jawj/OverlappingMarkerSpiderfier) as well:
+It can be used with InfoWindow:
 
-[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/oms.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/map-oms-animate.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/infowindow.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/geolocationmarker-infowindow.html)
 
 This demonstrates [MarkerWithGhost](#markerwithghost). Click on map to call setPosition. Right-click to call setGhostPosition.
 Only the "ghost" will move, causing no events.
