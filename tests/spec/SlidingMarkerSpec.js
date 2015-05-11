@@ -207,6 +207,7 @@
 
                 marker = new SlidingMarker({
                     position: myLatlng,
+                    anchorPoint: new google.maps.Point(12, 23),
                     map: map,
                     title: 'Hello World!',
                     duration: 300,
@@ -253,7 +254,7 @@
 
             });
 
-            describe("calling setPosition", function () {
+            describe("defining newPosition", function () {
 
                 var startPosition,
                     newPosition = new google.maps.LatLng(51, 12),
@@ -268,13 +269,21 @@
 
                 });
 
-                describe("with newPosition", function () {
+                describe("and calling setPosition(newPosition)", function () {
 
                     beforeEach(function (done) {
                         animateCompleteDeferred = new $.Deferred();
                         animateCompleteDeferred.then(done);
 
                         marker.setPosition(newPosition);
+                    });
+
+                    it("getPosition should return newPosition", function () {
+                        expect(marker.getPosition()).toEqual(newPosition);
+                    });
+
+                    it("position should return newPosition", function () {
+                        expect(marker.position).toEqual(newPosition);
                     });
 
                     it("position_changed should be called once", function () {
@@ -292,6 +301,14 @@
                     it("animationposition_changed last call should be new position", function () {
                         var changes = animationPositionEventSpy.changes;
                         expect(changes[changes.length - 1].value).toEqual(newPosition);
+                    });
+
+                    it("anchorPoint of marker and marker._instance should be the same", function () {
+                        expect(marker.get("anchorPoint")).toEqual(marker._instance.get("anchorPoint"));
+                    });
+
+                    it("internalPosition of marker and marker._instance should be the same", function () {
+                        expect(marker.get("internalPosition")).toEqual(marker._instance.get("internalPosition"));
                     });
 
                     afterEach(function (done) {

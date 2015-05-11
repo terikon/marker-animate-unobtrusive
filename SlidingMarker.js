@@ -191,6 +191,8 @@
             delete this._constructing;
 
             this.bindTo("animationPosition", this._instance, "position");
+            this.bindTo("anchorPoint", this._instance, "anchorPoint"); //This makes InfoWindow.open(map, marker) work.
+            this.bindTo("internalPosition", this._instance, "internalPosition"); //This makes InfoWindow.open(map, marker) work.
 
         };
 
