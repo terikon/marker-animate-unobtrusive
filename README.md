@@ -221,7 +221,7 @@ Here is animated version of Geolocation Marker:
 
 It can be used with InfoWindow:
 
-[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/infowindow.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/geolocationmarker-infowindow.html)
+[![alt unobtrusive](http://terikon.github.io/marker-animate-unobtrusive/demo/screenshots/infowindow.jpg)](http://terikon.github.io/marker-animate-unobtrusive/demo/unobtrusive/markermove-infowindow.html)
 
 This demonstrates [MarkerWithGhost](#markerwithghost). Click on map to call setPosition. Right-click to call setGhostPosition.
 Only the "ghost" will move, causing no events.
