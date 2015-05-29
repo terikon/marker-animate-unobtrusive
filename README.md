@@ -79,7 +79,7 @@ So dependencies look like follows:
 
 <!-- jquery library and jquery.easing plugin are needed -->
 <script src="jquery.min.js"></script>
-<script src="jquery.easing.js"></script>
+<script src="jquery.easing.1.3.js"></script>
 
 <!-- we provide marker for google maps, so here it comes  -->
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
