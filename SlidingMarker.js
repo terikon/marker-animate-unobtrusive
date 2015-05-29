@@ -43,12 +43,20 @@
 
         var GoogleMarker = google.maps.Marker; //Store original in case it will be replaced in initializeGlobally().
 
+        var animateTo;
+
         //default options
         var defaultOptions = {
             easing: "easeInOutQuint",
             duration: 1000,
             animateFunctionAdapter: function (marker, destPosition, easing, duration) {
-                google.maps.Marker.prototype.animateTo.call(marker, destPosition, {
+                if (!animateTo) {
+                    animateTo = google.maps.Marker.prototype.animateTo;
+                    if (!animateTo) {
+                        throw new Error("Please either reference markerAnimate.js, or provide an alternative animateFunctionAdapter");
+                    }
+                }
+                animateTo.call(marker, destPosition, {
                     easing: easing,
                     duration: duration,
                     complete: function () {
