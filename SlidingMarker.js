@@ -1,13 +1,13 @@
-﻿/* global define,module,require */
+﻿/* global define,module,require,google */
 
 (function (root, factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jquery', 'markerAnimate'], factory.bind(null, root));
+        define(['jquery', 'marker-animate'], factory.bind(null, root));
     } else if (typeof module !== "undefined" && module !== null && module.exports != null) { // jshint ignore:line
         // Node module.
-        module.exports = factory(window, require('jquery'));
+        module.exports = factory(root, require('jquery'), require('marker-animate'));
     } else {
         // Browser globals
         root.SlidingMarker = factory(root, root.jQuery);
@@ -15,8 +15,6 @@
 }(this,
     function (root, $) {
         'use strict';
-
-        var google = root.google;
 
         //Let jQuery be soft dependency
         $ = $ || {};

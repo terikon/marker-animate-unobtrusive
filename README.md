@@ -44,15 +44,6 @@ This project is one big step towards animated [OverlappingMarkerSpiderfier](http
 
 # Install
 
-## with npm
-
-```
-npm install marker-animate-unobtrusive
-```
-
-All needed dependencies are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
-These are jquery.easing and markerAnimate.
-
 ## with bower
 
 ```
@@ -94,6 +85,29 @@ Note: [jQuery](http://jquery.com/download) is soft dependency, you can prefer no
 you should provide [alternative animation routine](#SlidingMarker.options.animateFunctionAdapter), and should not include
 jquery.easing and markerAnimate libraries.
 
+All needed dependencies are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
+
+## with npm
+
+```
+npm install marker-animate-unobtrusive
+```
+
+The library is compatible with [NW.js](nwjs.io). Use it following way:
+
+```html
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript">
+  global.google = google;
+</script>
+<script type="text/javascript" src="app.js"></script>
+```
+
+```js
+var SlidingMarker = require('marker-animate-unobtrusive');
+var marker = new SlidingMarker();
+```
+
 # Use
 
 ## locally
@@ -127,7 +141,6 @@ var marker = new google.maps.Marker();
 ...
 marker.setPosition(latLng); //Will cause smooth animation
 ```
-
 
 # API
 
@@ -235,13 +248,13 @@ Geolocation Marker are in [vendor](https://github.com/terikon/marker-animate-uno
 
 marker-animate-unobtrusive can be used with [requirejs](http://requirejs.org/).
 
-'jquery' library should be configured with requirejs. markerAnimate should be configured as well.
+'jquery' library should be configured with requirejs. marker-animate should be configured as well.
 
 ```js
 requirejs.config({
   shim: {
-    "jquery.easing": ["jquery"],
-    "markerAnimate": { deps: ["jquery.easing"] }
+    "jquery-easing": ["jquery"],
+    "marker-animate": { deps: ["jquery-easing"] }
   }
 });
 ```

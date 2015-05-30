@@ -1,4 +1,4 @@
-﻿/* global define,module,require */
+﻿/* global define,module,require,google */
 
 (function (root, factory) {
     'use strict';
@@ -7,7 +7,7 @@
         define(['jquery', 'SlidingMarker'], factory.bind(null, root));
     } else if (typeof module !== "undefined" && module !== null && module.exports != null) { // jshint ignore:line
         // Node module.
-        module.exports = factory(window, require('jquery'), require('SlidingMarker'));
+        module.exports = factory(root, require('jquery'), require('SlidingMarker'));
     } else {
         // Browser globals
         root.MarkerWithGhost = factory(root, root.jQuery, root.SlidingMarker);
@@ -15,8 +15,6 @@
 }(this,
     function (root, $, SlidingMarker) {
         'use strict';
-
-        var google = root.google;
 
         //Let jQuery be soft dependency
         $ = $ || {};
