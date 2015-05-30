@@ -93,7 +93,7 @@ All needed dependencies are in [vendor](https://github.com/terikon/marker-animat
 npm install marker-animate-unobtrusive
 ```
 
-The library is compatible with [NW.js](nwjs.io). Use it following way:
+The library is compatible with [NW.js](http://nwjs.io). Use it following way:
 
 ```html
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
