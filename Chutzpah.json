@@ -7,7 +7,7 @@
     "TestHarnessDirectory": "node_modules/jasmine-core/lib/jasmine-core",
     "RootReferencePathMode": "SettingsFileDirectory",
     "References": [
-        { "Path": "https://maps.googleapis.com/maps/api/js?sensor=false" },
+        { "Path": "https://maps.googleapis.com/maps/api/js?sensor=false#dummy.js" },
         { "Path": "node_modules/jquery/dist/jquery.min.js" },
         { "Path": "vendor/jquery.easing.1.3.js" },
         { "Path": "vendor/markerAnimate.js" },
