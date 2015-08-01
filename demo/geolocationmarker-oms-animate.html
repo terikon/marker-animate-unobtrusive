@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Animated OMS with labels</title>
+    
+	<style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .map-control-ui {
+            background-color: white;
+            border: 2px solid white;
+            border-radius: 3px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            cursor: pointer;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .map-control-text {
+            color: rgb(25, 25, 25);
+            line-height: 38px;
+            padding-left: 5px;
+            padding-right: 5px;
+            font-size: 16px;
+        }
+    </style>
+	
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=geometry,places"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="../vendor/jquery.easing.1.3.js"></script>
+    <script src="../vendor/oms.terikon.js"></script>
+    <script src="../vendor/markerAnimate.js"></script>
+    <script src="../SlidingMarker.js"></script>
+    <script src="../MarkerWithGhost.js"></script>
+    <script>
+        MarkerWithGhost.initializeGlobally();
+    </script>
+    <script src="../vendor/markerwithlabel.terikon.js"></script>
+    <script src="../vendor/geolocationmarker.terikon.js"></script>
+    
+
+    <script type="text/javascript">
+        var INACTIVE_DOT = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            ACTIVE_DOT = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(32.520204, 34.937258);
+
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 7
+            };
+            var map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+
+            var geoMarker,
+                latLngToGeoPosition = function (latLng) {
+                    return {
+                        coords: {
+                            latitude: latLng.lat(),
+                            longitude: latLng.lng(),
+                            accuracy: 100000
+                        }
+                    };
+                };
+
+            var buttonAnimateMarkers = $("#button-animate-markers")[0];
+            map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(buttonAnimateMarkers);
+
+            google.maps.event.addDomListener(buttonAnimateMarkers, 'click', function () {
+                toggleAnimateAll();
+            });
+
+            var buttonAnimateGeo = $("#button-animate-geo")[0];
+            map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(buttonAnimateGeo);
+
+            google.maps.event.addDomListener(buttonAnimateGeo, 'click', function () {
+                toggleAnimateGeo();
+            });
+
+            var spiderfierOptions = {
+                //markersWontMove: false,
+                //markersWontHide: false,
+
+                keepSpiderfied: true,
+
+                nearbyDistance: 60, //default: 20
+
+                circleSpiralSwitchover: Infinity, //default: 9, 0-spiral, Infinity-circle
+
+                legWeight: 3 //default: 1.5
+            };
+
+            var oms = new OverlappingMarkerSpiderfier(map, spiderfierOptions);
+
+            oms.addListener('click', function (marker, event) {
+                console.log("Event: oms.click");
+            });
+
+            //printEvent(oms, "click"); //This does not work
+
+            oms.addListener('spiderfy', function (spiderfied, others) {
+                $.each(spiderfied, function (index, m) {
+                    if (m.setIcon) {
+                        m.setIcon(ACTIVE_DOT);
+                    }
+                });
+            });
+
+            oms.addListener('unspiderfy', function (unspiderfied, others) {
+                $.each(unspiderfied, function (index, m) {
+                    if (m.setIcon) {
+                        m.setIcon(INACTIVE_DOT);
+                    }
+                });
+            });
+
+            var addMarkers = function () {
+                var i;
+                for (i = 0; i < 100; i++) {
+                    addMarker(i, mapOptions.center, Math.random() * 200000, Math.floor((Math.random() * 360) - 180));
+                }
+            };
+
+            var markers = [];
+            
+            var addMarker = function (i, center, distance, heading) {
+
+                var marker = new MarkerWithLabel({
+                    position: google.maps.geometry.spherical.computeOffset(center, distance, heading),
+                    title: "Marker " + i,
+                    labelContent: "" + i,
+                    icon: INACTIVE_DOT
+                });
+
+                marker.setMap(map);
+
+                markers.push(marker);
+
+                printEvent(marker, "position_changed"); //will not be triggered by oms - good part
+
+                oms.addMarker(marker);
+            };
+
+            var toggleAnimateAllInterval = null,
+                toggleAnimateAll = function () {
+                    if (toggleAnimateAllInterval === null) {
+                        toggleAnimateAllInterval = setInterval(function () {
+                            $.each( /*oms.getMarkers()*/markers, function (index, m) {
+                                //if (index == 0) {
+                                var newPosition = google.maps.geometry.spherical.computeOffset(m.getPosition(), 50000, 0);
+                                m.setPosition(newPosition);
+                                //}
+                            });
+                        }, 4000);
+                    } else {
+                        clearInterval(toggleAnimateAllInterval);
+                        toggleAnimateAllInterval = null;
+                    }
+                },
+
+                toggleAnimateGeoInterval = null,
+                toggleAnimateGeo = function () {
+                    if (toggleAnimateGeoInterval === null) {
+                        toggleAnimateGeoInterval = setInterval(function () {
+                            
+                            var newPosition = google.maps.geometry.spherical.computeOffset(geoMarker.getPosition(), 50000, 0);
+                            geoMarker.updatePosition(latLngToGeoPosition(newPosition));
+
+                        }, 4000);
+                    } else {
+                        clearInterval(toggleAnimateGeoInterval);
+                        toggleAnimateGeoInterval = null;
+                    }
+                };
+
+            geoMarker = new GeolocationMarker();
+            geoMarker.setMarkerOptions({ clickable: true });
+            geoMarker.setCircleOptions({
+                fillOpacity: 0.5
+            });
+            geoMarker.setMap(map, false);
+            geoMarker.updatePosition(latLngToGeoPosition(myLatlng));
+
+            oms.addMarker(geoMarker);
+
+            addMarkers();
+
+        }
+
+        var printEvent = function (instance, eventName) {
+            google.maps.event.addListener(instance, eventName, function () {
+                console.log("Event: " + eventName);
+            });
+        };
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+
+</head>
+<body>
+    <div id="map-canvas"></div>
+    <div id="button-animate-markers">
+        <div class="map-control-ui" title="Click to animate markers">
+            <div class="map-control-text">
+                Toggle move all the markers
+            </div>
+        </div>
+    </div>
+    <div id="button-animate-geo">
+        <div class="map-control-ui" title="Click to animate geo marker">
+            <div class="map-control-text">
+                Toggle move geo marker
+            </div>
+        </div>
+    </div>
+</body>
+</html>
