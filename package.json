@@ -4,50 +4,42 @@
   "version": "0.2.4",
   "description": "Unobtrusive Google Maps animated marker",
   "main": "SlidingMarker.js",
-  
   "scripts": {
     "//": "use '|| true' to prevent warning",
     "build": "npm install && grunt",
     "test": "grunt test",
     "jshint": "grunt jshint"
   },
-  
   "repository": {
     "type": "git",
     "url": "https://github.com/terikon/marker-animate-unobtrusive.git"
   },
-  
   "keywords": [
     "Google Maps",
     "marker",
     "marker animation",
     "SlidingMarker"
   ],
-  
   "author": {
     "name": "Terikon Software",
     "email": "npm@terikon.com",
-    "url": "http://il.linkedin.com/in/romanviskin" 
+    "url": "http://il.linkedin.com/in/romanviskin"
   },
-  
   "license": "MIT",
-  
   "bugs": {
     "url": "https://github.com/terikon/marker-animate-unobtrusive/issues"
   },
-  
   "homepage": "https://github.com/terikon/marker-animate-unobtrusive",
-  
   "//": "you can use something like git+https://github.com/viskin/marker-animate.git#OverlappingMarkerSpiderfier",
   "dependencies": {
+    "jasmine-core": "^2.3.4",
     "jquery": "*",
     "marker-animate": "^0.0.1"
   },
-  
   "devDependencies": {
-	"grunt": "^0.4.5",
-	"grunt-contrib-uglify": "^0.9.1",
-	"grunt-contrib-jshint": "^0.11.0",
-	"grunt-contrib-jasmine": "^0.9.0"
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-jasmine": "^0.9.0"
   }
 }

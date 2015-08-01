@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jasmine Spec Runner</title>
+    <link rel="shortcut icon" type="image/png" href="../node_modules/jasmine-core/images/jasmine_favicon.png">
+    <link rel="stylesheet" href="../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+	
+    <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+    <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+    <script src="../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+    <!-- include source files here... -->
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+    <!-- jquery is soft dependency, if included here it is used by SlidingMarker and MarkerWithGhost -->
+    <!--<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/jquery.easing.1.3.js"></script>-->
+
+    <script src="../SlidingMarker.js"></script>
+    <script src="../MarkerWithGhost.js"></script>
+    
+    <!-- jquery is soft dependency, if included here it is used only for tests -->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/jquery.easing.1.3.js"></script>
+    <script src="../vendor/markerAnimate.js"></script>
+
+    <script src="testHelper.js"></script>
+    <!-- include spec files here... -->
+    <script src="spec/SlidingMarkerSpec.js"></script>
+    <script src="spec/MarkerWithGhostSpec.js"></script>
+    <script type="text/javascript">
+        document.title = document.title + " v" + jasmine.version;
+    </script>
+</head>
+<body>
+</body>
+</html>
