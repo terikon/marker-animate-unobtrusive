@@ -395,5 +395,9 @@ Before committing, please run jshint:
 To run tests:
 
     npm run test
+    
 
 Tests reside in [tests/spec](https://github.com/terikon/marker-animate-unobtrusive/tree/master/tests/spec) folder.
+
+Tests are also runnable in browser and debuggable with [tests/SpecRunner.html](
+<https://github.com/terikon/marker-animate-unobtrusive/tree/master/tests/SpecRunner.html>).
