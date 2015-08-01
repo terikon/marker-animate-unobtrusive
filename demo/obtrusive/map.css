@@ -1,0 +1,70 @@
+﻿html, body, #map_canvas {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.control {
+    position: absolute;
+    bottom: 28px;
+    right: 6px;
+    width: 200px;
+    height: 78px;
+    background: rgba(0,0,0,0.85);
+    box-shadow: rgba(0,0,0,0.5) 0 3px 5px;
+    -moz-box-shadow: rgba(0,0,0,0.5) 0 3px 5px;
+    -webkit-box-shadow: rgba(0,0,0,0.5) 0 3px 5px;
+    color: #fff;
+    padding: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#controls {
+    bottom: 28px;
+    right: 6px;
+    width: 200px;
+    height: 78px;
+}
+
+#log {
+    bottom: 28px;
+    left: 6px;
+    width: 200px;
+    height: 78px;
+    overflow-y: scroll;
+}
+
+#controls .row {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#controls .row label {
+    width: 60px;
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
+    line-height: 23px;
+}
+
+#controls .row select,
+#controls .row input {
+    width: 120px;
+    float: left;
+}
+
+#controls .row input#durationOption {
+    width: 113px;
+}
+
+#controls .row a {
+    display: block;
+    color: #7EB1FF;
+    text-decoration: none;
+    font-size: 10px;
+}
