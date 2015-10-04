@@ -157,6 +157,7 @@
                                 m.setPosition(newPosition);
                                 //}
                             });
+                            oms.keepItSpiderfied();
                         }, 4000);
                     } else {
                         clearInterval(toggleAnimateAllInterval);
@@ -171,6 +172,7 @@
                             
                             var newPosition = google.maps.geometry.spherical.computeOffset(geoMarker.getPosition(), 50000, 0);
                             geoMarker.updatePosition(latLngToGeoPosition(newPosition));
+                            oms.keepItSpiderfied();
 
                         }, 4000);
                     } else {
