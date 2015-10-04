@@ -487,7 +487,7 @@ Note: The Google Maps API v3 must be included *before* this code
         if (marker['_omsData'] != null) {
           path = marker['_omsData'].leg.getPath();
           if (marker !== markerNotToMove) {
-            marker.setGhostPosition(path.j[0]);
+            marker.setGhostPosition(path.getArray()[0]);
           }
           marker['_omsData'].leg.setMap(null);
           marker.setZIndex(null);
@@ -575,3 +575,5 @@ Note: The Google Maps API v3 must be included *before* this code
   })();
 
 }).call(this);
+
+//# sourceMappingURL=oms.js.map
