@@ -35,7 +35,7 @@
             });
 
             var $log = $("#log");
-            $log.html("Left click to setPostion, Right click to setGhostPosition");
+            $log.html("Left click to setPostion, Right click to setGhostPosition</br>");
             google.maps.event.addListener(marker, 'position_changed', function () {
                 $log.html($log.html() + "marker.position_changed<br/>");
             });

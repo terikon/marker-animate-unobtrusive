@@ -166,7 +166,7 @@ In addition, following options are supported to fine-tune animation for each mar
 - **duration** - in ms, 1000 by default.
 <a name="SlidingMarker.options.animateFunctionAdapter"></a>
 - **animateFunctionAdapter** - by default, SlidingMarker assumes that google.maps.Marker.prototype is enhanced with animateTo method, but you can provide alternative animation adapter. It should be function with following declaration:
-animateFunctionAdapter(marker, destPosition, easing, duration).
+animateFunctionAdapter(marker, destPosition, easing, duration). If destPosition provided is null, adapter should stop animation.
 
 Example:
 
