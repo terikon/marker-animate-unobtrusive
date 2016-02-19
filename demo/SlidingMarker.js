@@ -41,7 +41,19 @@
 
         var GoogleMarker = google.maps.Marker; //Store original in case it will be replaced in initializeGlobally().
 
-        var animateTo;
+        var animateTo,
+            markerAnimate_AnimateTo_Wrapper = function(destPosition, easing, duration) { //default implementation based on markerAnimate
+                if (destPosition === null || destPosition === undefined) {
+                    //as markerAnimate provides no means to stop animation, do it manually, even though it leaks markerAnimate implementation.
+                    if (window.cancelAnimationFrame) {
+                        window.cancelAnimationFrame(this.AT_animationHandler);
+                    } else {
+                        clearTimeout(this.AT_animationHandler); 
+                    }
+                    return;
+                }
+                google.maps.Marker.prototype.animateTo.apply(this, arguments);
+            };
 
         //default options
         var defaultOptions = {
@@ -49,10 +61,10 @@
             duration: 1000,
             animateFunctionAdapter: function (marker, destPosition, easing, duration) {
                 if (!animateTo) {
-                    animateTo = google.maps.Marker.prototype.animateTo;
-                    if (!animateTo) {
+                    if (!google.maps.Marker.prototype.animateTo) {
                         throw new Error("Please either reference markerAnimate.js, or provide an alternative animateFunctionAdapter");
                     }
+                    animateTo = markerAnimate_AnimateTo_Wrapper;
                 }
                 animateTo.call(marker, destPosition, {
                     easing: easing,
@@ -139,7 +151,11 @@
 
                 //This will be called by binding created with marker.bindTo() method, instead of call to set("position").
                 position_changed: function () {
-                    this._setInstancePositionAnimated(this.getPosition());
+                    if (!this._suppress_animation) {
+                        this._setInstancePositionAnimated(this.getPosition());
+                    } else {
+                        delete this._suppress_animation;
+                    }
                 }
                 
             });
@@ -215,7 +231,10 @@
 
             //Changes marker position immediately
             setPositionNotAnimated: function (position) {
+                this._suppress_animation = true; //will be unset by position_changed handler
+                this.get("animateFunctionAdapter").call(null, this._instance, null); //stop current animation
                 this.originalSet("position", position);
+                this._instance.setPosition(position);
             },
 
             setDuration: function (value) {

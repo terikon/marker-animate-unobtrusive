@@ -37,6 +37,11 @@
             //marker.setMap(map);
 
             var $log = $("#log");
+            
+            $log.html(
+                "<b>left click</b> to call setPosition<br/>" + 
+                "<b>right click</b> to call setPositionNotAnimated<br/>");
+            
             google.maps.event.addListener(marker, 'position_changed', function () {
                 $log.html($log.html() + "marker.position_changed<br/>");
             });
@@ -49,7 +54,7 @@
         $(function () {
             initialize();
 
-            google.maps.event.addListener(map, 'click', function (event) {
+            var clickHandler = function (event, clickType) {
                 var duration = parseInt($('#durationOption').val());
 
                 if (duration < 0) {
@@ -60,8 +65,18 @@
                 marker.setDuration(duration);
                 marker.setEasing($('#easingOption').val());
 
-                marker.setPosition(event.latLng);
-            });
+                if (clickType === "left") {
+                    marker.setPosition(event.latLng);
+                } else {
+                    marker.setPositionNotAnimated(event.latLng);
+                }
+            };
+            
+            var leftClickHandler = function(event) { clickHandler(event, "left") };
+            var rightClickHandler = function(event) { clickHandler(event, "right") };
+
+            google.maps.event.addListener(map, 'click', leftClickHandler);
+            google.maps.event.addListener(map, 'rightclick', rightClickHandler);
 
             var printEvent = function (instance, eventName) {
                 google.maps.event.addListener(instance, eventName, function () {
