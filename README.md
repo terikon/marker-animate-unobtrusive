@@ -81,6 +81,13 @@ So dependencies look like follows:
 <!-- SlidingMarker hides details from you - your markers are just animated automagically -->
 <script src="SlidingMarker.min.js"></script>
 ```
+Alternatively, the library can be downloaded from CDN:
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marker-animate-unobtrusive/0.2.8/vendor/markerAnimate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marker-animate-unobtrusive/0.2.8/SlidingMarker.min.js"></script>
+```
+
 Note: [jQuery](http://jquery.com/download) is soft dependency, you can prefer not to include it. But if you decide not to,
 you should provide [alternative animation routine](#SlidingMarker.options.animateFunctionAdapter), and should not include
 jquery.easing and markerAnimate libraries.
