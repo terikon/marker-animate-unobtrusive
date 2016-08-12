@@ -44,10 +44,23 @@ This project is one big step towards animated [OverlappingMarkerSpiderfier](http
 
 # Install
 
+## with npm
+
+```
+npm install marker-animate-unobtrusive
+```
+
 ## with bower
 
 ```
 bower install marker-animate-unobtrusive
+```
+
+## TypeScript support
+
+```
+typings install dt~google.maps --global --save
+typings install dt~marker-animate-unobtrusive --global --save
 ```
 
 ## include on page
@@ -94,11 +107,7 @@ jquery.easing and markerAnimate libraries.
 
 All needed dependencies are in [vendor](https://github.com/terikon/marker-animate-unobtrusive/tree/master/vendor) folder.
 
-## with npm
-
-```
-npm install marker-animate-unobtrusive
-```
+## NW.js
 
 The library is compatible with [NW.js](http://nwjs.io). Use it following way:
 
