@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=UTF-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>marker-animate-unobtrusive TypeScript demo</title>
+    <base href="/">
+
+    <link href="map.css" rel="stylesheet" />
+
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="vendor/jquery.easing.1.3.js"></script>
+    <script src="vendor/markerAnimate.js"></script>
+    <script src="SlidingMarker.js"></script>
+
+  </head>
+  <body>
+
+    <div id="map_canvas"></div>
+
+    <div id="controls" class="control">
+        <div class="row">
+            <label for="easingOption">Easing:</label>
+            <select id="easingOption">
+                <option value="linear">linear</option>
+                <option value="swing">swing</option>
+                <option value="easeInQuad">easeInQuad</option>
+                <option value="easeOutQuad">easeOutQuad</option>
+                <option value="easeInOutQuad">easeInOutQuad</option>
+                <option value="easeInCubic">easeInCubic</option>
+                <option value="easeOutCubic">easeOutCubic</option>
+                <option value="easeInOutCubic">easeInOutCubic</option>
+                <option value="easeInQuart">easeInQuart</option>
+                <option value="easeOutQuart">easeOutQuart</option>
+                <option value="easeInOutQuart">easeInOutQuart</option>
+                <option value="easeInQuint">easeInQuint</option>
+                <option value="easeOutQuint">easeOutQuint</option>
+                <option value="easeInOutQuint" selected>easeInOutQuint</option>
+                <option value="easeInSine">easeInSine</option>
+                <option value="easeOutSine">easeOutSine</option>
+                <option value="easeInOutSine">easeInOutSine</option>
+                <option value="easeInExpo">easeInExpo</option>
+                <option value="easeOutExpo">easeOutExpo</option>
+                <option value="easeInOutExpo">easeInOutExpo</option>
+                <option value="easeInCirc">easeInCirc</option>
+                <option value="easeOutCirc">easeOutCirc</option>
+                <option value="easeInOutCirc">easeInOutCirc</option>
+                <option value="easeInElastic">easeInElastic</option>
+                <option value="easeOutElastic">easeOutElastic</option>
+                <option value="easeInOutElastic">easeInOutElastic</option>
+                <option value="easeInBack">easeInBack</option>
+                <option value="easeOutBack">easeOutBack</option>
+                <option value="easeInOutBack">easeInOutBack</option>
+                <option value="easeInBounce">easeInBounce</option>
+                <option value="easeOutBounce">easeOutBounce</option>
+                <option value="easeInOutBounce">easeInOutBounce</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="durationOption">Duration:</label>
+            <input type="number" id="durationOption" value="1000">
+        </div>
+        <div class="row" id="backLink">
+            <a href="https://github.com/terikon/marker-animate-unobtrusive">More on github &rarr;</a>
+        </div>
+
+    </div>
+
+    <div id="log" class="control">
+    </div>
+
+    <script async src="/main.bundle.js"></script>
+
+  </body>
+</html>

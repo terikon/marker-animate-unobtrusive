@@ -1,0 +1,30 @@
+{
+  "name": "marker-animate-unobtrusive-typescript-demo",
+  "version": "1.0.0",
+  "description": "Demo app of marker-animate-unobtrusive with TypeScript",
+  "scripts": {
+    "build": "webpack --progress",
+    "watch": "npm run build -- --watch",
+    "server": "webpack-dev-server --inline --progress --port 3000 --content-base src",
+    "start": "npm run server"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "marker-animate-unobtrusive": "^0.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.48",
+    "@types/jquery": "^2.0.40",
+    "@types/googlemaps": "^3.26.2",
+    "@types/marker-animate-unobtrusive": "^0.2.4",
+    "awesome-typescript-loader": "^2.2.4",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.25.0",
+    "raw-loader": "^0.5.1",
+    "to-string-loader": "^1.1.4",
+    "typescript": "~2.0.10",
+    "webpack": "2.1.0-beta.27",
+    "webpack-dev-server": "2.1.0-beta.11",
+    "webpack-merge": "^0.15.0"
+  }
+}
