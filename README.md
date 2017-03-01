@@ -59,9 +59,19 @@ bower install marker-animate-unobtrusive
 ## TypeScript support
 
 ```
+npm install @types/googlemaps --save
+npm install @types/marker-animate-unobtrusive --save
+```
+
+Or with typings:
+
+```
 typings install dt~google.maps --global --save
 typings install dt~marker-animate-unobtrusive --global --save
 ```
+
+No need to import anything. See [demo TypeScript project](https://github.com/terikon/marker-animate-unobtrusive/tree/master/demo/typescript)
+for reference.
 
 ## include on page
 
