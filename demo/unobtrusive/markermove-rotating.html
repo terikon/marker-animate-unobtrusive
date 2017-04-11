@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Google Maps Rotating Marker Move Demo</title>
+
+    <link href="map.css" rel="stylesheet" />
+
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="../vendor/jquery.easing.1.3.js"></script>
+    <script src="../vendor/markerAnimate.js"></script>
+    <script src="../SlidingMarker.js"></script>
+
+    <script>
+        
+        // the trick is to add this string as hash to marker icon, and query for the image with css selector like img[src*="rotating-marker-id"]
+        var rotatingMarkerId = 'rotating-marker-id';
+
+        var marker, map;
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(32.520204, 34.937258);
+            var mapOptions = {
+                zoom: 4,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+            marker = new SlidingMarker({
+                position: myLatlng,
+                map: map,
+                title: 'I\m sliding marker',
+
+                // needed for rotation
+                optimized: false,
+                icon: 'http://maps.google.com/mapfiles/kml/shapes/horsebackriding.png' + '#' + rotatingMarkerId,
+
+            });
+
+            var $log = $("#log");
+            
+            $log.html(
+                "<b>left click</b> to call setPosition<br/>" + 
+                "<b>right click</b> to call setPositionNotAnimated<br/>");
+            
+            google.maps.event.addListener(marker, 'position_changed', function () {
+                $log.html($log.html() + "marker.position_changed<br/>");
+            });
+
+        }
+
+        ///////////////////////////////////////////////////
+
+        $(function () {
+            initialize();
+
+            var clickHandler = function (event, clickType) {
+                var duration = parseInt($('#durationOption').val());
+
+                if (duration < 0) {
+                    duration = 1;
+                    $('#durationOption').val(duration);
+                }
+
+                marker.setDuration(duration);
+                marker.setEasing($('#easingOption').val());
+
+                //rotate the marker
+                var markerImage = document.querySelector('img[src*="' + rotatingMarkerId + '"]');
+                var rotation = google.maps.geometry.spherical.computeHeading(marker.getPosition(), event.latLng);
+                markerImage.style.transform = 'rotate(' + rotation + 'deg)';
+
+                if (clickType === "left") {
+                    marker.setPosition(event.latLng);
+                } else {
+                    marker.setPositionNotAnimated(event.latLng);
+                }
+
+            };
+            
+            var leftClickHandler = function(event) { clickHandler(event, "left") };
+            var rightClickHandler = function(event) { clickHandler(event, "right") };
+
+            google.maps.event.addListener(map, 'click', leftClickHandler);
+            google.maps.event.addListener(map, 'rightclick', rightClickHandler);
+
+            var printEvent = function (instance, eventName) {
+                google.maps.event.addListener(instance, eventName, function () {
+                    console.log("Event: " + eventName);
+                });
+            };
+
+            printEvent(marker, "click");
+            printEvent(marker, "map_changed");
+            printEvent(marker, "position_changed");
+            printEvent(marker, "animationposition_changed");
+
+            if (window.location.hash == "#iframe") {
+                $('#backLink').hide();
+                $('#controls').css('height', '55px');
+            }
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="map_canvas"></div>
+
+    <div id="controls" class="control">
+        <div class="row">
+            <label for="easingOption">Easing:</label>
+            <select id="easingOption">
+                <option value="linear">linear</option>
+                <option value="swing">swing</option>
+                <option value="easeInQuad">easeInQuad</option>
+                <option value="easeOutQuad">easeOutQuad</option>
+                <option value="easeInOutQuad">easeInOutQuad</option>
+                <option value="easeInCubic">easeInCubic</option>
+                <option value="easeOutCubic">easeOutCubic</option>
+                <option value="easeInOutCubic">easeInOutCubic</option>
+                <option value="easeInQuart">easeInQuart</option>
+                <option value="easeOutQuart">easeOutQuart</option>
+                <option value="easeInOutQuart">easeInOutQuart</option>
+                <option value="easeInQuint">easeInQuint</option>
+                <option value="easeOutQuint">easeOutQuint</option>
+                <option value="easeInOutQuint" selected>easeInOutQuint</option>
+                <option value="easeInSine">easeInSine</option>
+                <option value="easeOutSine">easeOutSine</option>
+                <option value="easeInOutSine">easeInOutSine</option>
+                <option value="easeInExpo">easeInExpo</option>
+                <option value="easeOutExpo">easeOutExpo</option>
+                <option value="easeInOutExpo">easeInOutExpo</option>
+                <option value="easeInCirc">easeInCirc</option>
+                <option value="easeOutCirc">easeOutCirc</option>
+                <option value="easeInOutCirc">easeInOutCirc</option>
+                <option value="easeInElastic">easeInElastic</option>
+                <option value="easeOutElastic">easeOutElastic</option>
+                <option value="easeInOutElastic">easeInOutElastic</option>
+                <option value="easeInBack">easeInBack</option>
+                <option value="easeOutBack">easeOutBack</option>
+                <option value="easeInOutBack">easeInOutBack</option>
+                <option value="easeInBounce">easeInBounce</option>
+                <option value="easeOutBounce">easeOutBounce</option>
+                <option value="easeInOutBounce">easeInOutBounce</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="durationOption">Duration:</label>
+            <input type="number" id="durationOption" value="1000">
+        </div>
+        <div class="row" id="backLink">
+            <a href="https://github.com/terikon/marker-animate-unobtrusive">More on github &rarr;</a>
+        </div>
+
+    </div>
+
+    <div id="log" class="control">
+    </div>
+
+</body>
+</html>
