@@ -1,4 +1,4 @@
-﻿/* global define,module,require,google */
+/* global define,module,require,google */
 
 (function (root, factory) {
     'use strict';
