@@ -23,7 +23,7 @@
     "raw-loader": "^0.5.1",
     "to-string-loader": "^1.1.4",
     "typescript": "~2.0.10",
-    "webpack": "2.1.0-beta.27",
+    "webpack": "5.94.0",
     "webpack-dev-server": "2.1.0-beta.11",
     "webpack-merge": "^0.15.0"
   }
